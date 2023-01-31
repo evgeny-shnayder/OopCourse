@@ -1,4 +1,6 @@
-import Range.Range;
+package Range_main;
+
+import evgeny_shnayder.Range.Range;
 
 public class Main {
     public static void main(String[] args) {

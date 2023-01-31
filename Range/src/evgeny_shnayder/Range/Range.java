@@ -1,4 +1,4 @@
-package Range;
+package evgeny_shnayder.Range;
 
 public class Range {
     private double from;
