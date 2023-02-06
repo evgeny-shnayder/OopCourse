@@ -1,12 +1,20 @@
 package evgeny_shnayder.Shape;
 
 public class Rectangle implements Shape {
-    protected double width;
-    protected double height;
+    private double width;
+    private double height;
 
     public Rectangle(double width, double height) {
         this.width = width;
         this.height = height;
+    }
+
+    public void setHeight(double height) {
+        this.height = height;
+    }
+
+    public void setWidth(double width) {
+        this.width = width;
     }
 
     @Override
