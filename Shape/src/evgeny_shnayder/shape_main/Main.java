@@ -1,9 +1,9 @@
 package evgeny_shnayder.shape_main;
 
-import evgeny_shnayder.Shape.Circle;
-import evgeny_shnayder.Shape.Rectangle;
-import evgeny_shnayder.Shape.Square;
-import evgeny_shnayder.Shape.Triangle;
+import evgeny_shnayder.Shape.*;
+
+import java.util.Arrays;
+import java.util.Comparator;
 
 public class Main {
     public static void main(String[] args) {
@@ -54,5 +54,22 @@ public class Main {
         System.out.println("Высота круга - " + circle.getWidth());
         System.out.println("Площадь круга - " + circle.getArea());
         System.out.println("Периметр круга - " + circle.getPerimeter());
+
+        Shape[] shapes = new Shape[]{new Circle(5.1), new Square(2.5), new Rectangle(4, 2.3),
+                new Triangle(1, 5, 5, 1, 1, 5),
+                new Circle(6.3), new Square(5)};
+
+        System.out.println("Максимальная площадь фигуры: " + getMaxAreaShape(shapes));
+        System.out.println("Вторая по величине периметра фигура: " + getMaxPerimeterShape(shapes));
+    }
+
+    static Shape getMaxAreaShape(Shape[] shapes) {
+        Arrays.sort(shapes, Comparator.comparing(Shape::getArea).reversed());
+        return shapes[0];
+    }
+
+    static Shape getMaxPerimeterShape(Shape[] shapes) {
+        Arrays.sort(shapes, Comparator.comparing(Shape::getPerimeter).reversed());
+        return shapes[1];
     }
 }
