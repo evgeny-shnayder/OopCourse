@@ -34,4 +34,29 @@ public class Circle implements Shape {
     public double getPerimeter() {
         return 2 * Math.PI * radius;
     }
+
+    @Override
+    public String toString() {
+        return "Круг радиусом: " + radius;
+    }
+
+    @Override
+    public boolean equals(Object circle) {
+        if (circle == this) {
+            return true;
+        }
+
+        if (circle == null || circle.getClass() != getClass()) {
+            return false;
+        }
+
+        Circle testCircle = (Circle) circle;
+
+        return radius == testCircle.radius;
+    }
+
+    @Override
+    public int hashCode() {
+        return Double.hashCode(radius);
+    }
 }

@@ -26,9 +26,9 @@ public class Main {
         triangle.setCoordinateY2(1);
         triangle.setCoordinateY3(5);
 
-        System.out.println("Треугольник с координатами точек: Х1 - " + triangle.getCoordinateX1() + ", Y1 - " + triangle.getCoordinateY1()
-                + ", X2 - " + triangle.getCoordinateX2() + ", Y2 - " + triangle.getCoordinateY2() + ", X3 - " + triangle.getCoordinateX3()
-                + ", Y3 - " + triangle.getCoordinateY3() + ".");
+        System.out.println("Треугольник с координатами точек: Х1 - " + triangle.getCoordinateX1() + ", Y1 - "
+                + triangle.getCoordinateY1() + ", X2 - " + triangle.getCoordinateX2() + ", Y2 - " + triangle.getCoordinateY2()
+                + ", X3 - " + triangle.getCoordinateX3() + ", Y3 - " + triangle.getCoordinateY3() + ".");
         System.out.println("Длина треугольника - " + triangle.getHeight());
         System.out.println("Высота треугольника - " + triangle.getWidth());
         System.out.println("Площадь треугольника - " + triangle.getArea());
@@ -47,7 +47,7 @@ public class Main {
 
         Circle circle = new Circle(2.5);
 
-        circle.setRadius(2);
+        circle.setRadius(3);
 
         System.out.println("Круг радиусом - " + circle.getRadius());
         System.out.println("Ширина круга - " + circle.getHeight());
@@ -55,20 +55,29 @@ public class Main {
         System.out.println("Площадь круга - " + circle.getArea());
         System.out.println("Периметр круга - " + circle.getPerimeter());
 
-        Shape[] shapes = new Shape[]{new Circle(5.1), new Square(2.5), new Rectangle(4, 2.3),
+        Shape[] shapes = new Shape[]{new Circle(3), new Square(3), new Rectangle(2.4, 3.9),
                 new Triangle(1, 5, 5, 1, 1, 5),
-                new Circle(6.3), new Square(5)};
+                new Circle(4.1), new Square(4)};
 
-        System.out.println("Максимальная площадь фигуры: " + getMaxAreaShape(shapes));
-        System.out.println("Вторая по величине периметра фигура: " + getMaxPerimeterShape(shapes));
+        System.out.println("Максимальная площадь фигуры: " + sortMaxAreaShape(shapes));
+        System.out.println("Вторая по величине периметра фигура: " + sortMaxPerimeterShape(shapes));
+
+        for (Shape e : shapes) {
+            System.out.println(e + " hash: " + e.hashCode());
+        }
+
+        System.out.println(circle + (circle.equals(shapes[2]) ? " равен " : " не равен ") + shapes[2]);
+        System.out.println(triangle + (triangle.equals(shapes[4]) ? " равен " : " не равен ") + shapes[4]);
+        System.out.println(square + (square.equals(shapes[3]) ? " равен " : " не равен ") + shapes[3]);
+        System.out.println(rectangle + (rectangle.equals(shapes[2]) ? " равен " : " не равен ") + shapes[2]);
     }
 
-    static Shape getMaxAreaShape(Shape[] shapes) {
+    static Shape sortMaxAreaShape(Shape[] shapes) {
         Arrays.sort(shapes, Comparator.comparing(Shape::getArea).reversed());
         return shapes[0];
     }
 
-    static Shape getMaxPerimeterShape(Shape[] shapes) {
+    static Shape sortMaxPerimeterShape(Shape[] shapes) {
         Arrays.sort(shapes, Comparator.comparing(Shape::getPerimeter).reversed());
         return shapes[1];
     }
