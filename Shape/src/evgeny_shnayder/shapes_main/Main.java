@@ -1,6 +1,6 @@
-package evgeny_shnayder.shape_main;
+package evgeny_shnayder.shapes_main;
 
-import evgeny_shnayder.Shape.*;
+import evgeny_shnayder.shapes.*;
 
 import java.util.Arrays;
 import java.util.Comparator;
@@ -11,7 +11,7 @@ public class Main {
 
         square.setWidth(4);
 
-        System.out.println("Квадрат со сторонами - " + square.getHeight());
+        System.out.println(square);
         System.out.println("Высота квадрата - " + square.getHeight());
         System.out.println("Ширина квадрата - " + square.getWidth());
         System.out.println("Площадь квадрата - " + square.getArea());
@@ -19,18 +19,19 @@ public class Main {
 
         Triangle triangle = new Triangle(1.1, 5.1, 5.1, 1.1, 1.1, 5.1);
 
-        triangle.setCoordinateX1(1);
-        triangle.setCoordinateX2(5);
-        triangle.setCoordinateX3(5);
-        triangle.setCoordinateY1(1);
-        triangle.setCoordinateY2(1);
-        triangle.setCoordinateY3(5);
+        triangle.setX1(1);
+        triangle.setX2(5);
+        triangle.setX3(5);
+        triangle.setY1(1);
+        triangle.setY2(1);
+        triangle.setY3(5);
 
-        System.out.println("Треугольник с координатами точек: Х1 - " + triangle.getCoordinateX1() + ", Y1 - "
-                + triangle.getCoordinateY1() + ", X2 - " + triangle.getCoordinateX2() + ", Y2 - " + triangle.getCoordinateY2()
-                + ", X3 - " + triangle.getCoordinateX3() + ", Y3 - " + triangle.getCoordinateY3() + ".");
-        System.out.println("Длина треугольника - " + triangle.getHeight());
-        System.out.println("Высота треугольника - " + triangle.getWidth());
+        System.out.println(triangle);
+        System.out.println("Треугольник с координатами точек: Х1 - " + triangle.getX1() + ", Y1 - "
+                + triangle.getY1() + ", X2 - " + triangle.getX2() + ", Y2 - " + triangle.getY2()
+                + ", X3 - " + triangle.getX3() + ", Y3 - " + triangle.getY3() + ".");
+        System.out.println("Высота треугольника - " + triangle.getHeight());
+        System.out.println("Ширина треугольника - " + triangle.getWidth());
         System.out.println("Площадь треугольника - " + triangle.getArea());
         System.out.println("Периметр треугольника - " + triangle.getPerimeter());
 
@@ -55,9 +56,14 @@ public class Main {
         System.out.println("Площадь круга - " + circle.getArea());
         System.out.println("Периметр круга - " + circle.getPerimeter());
 
-        Shape[] shapes = new Shape[]{new Circle(3), new Square(3), new Rectangle(2.4, 3.9),
+        Shape[] shapes = {
+                new Circle(3),
+                new Square(3),
+                new Rectangle(2.4, 3.9),
                 new Triangle(1, 5, 5, 1, 1, 5),
-                new Circle(4.1), new Square(4)};
+                new Circle(4.1),
+                new Square(4)
+        };
 
         System.out.println("Максимальная площадь фигуры: " + sortMaxAreaShape(shapes));
         System.out.println("Вторая по величине периметра фигура: " + sortMaxPerimeterShape(shapes));

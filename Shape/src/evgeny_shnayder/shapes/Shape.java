@@ -1,4 +1,4 @@
-package evgeny_shnayder.Shape;
+package evgeny_shnayder.shapes;
 
 public interface Shape {
     double getWidth();

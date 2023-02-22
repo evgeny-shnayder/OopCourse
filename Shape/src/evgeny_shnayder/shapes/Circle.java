@@ -1,4 +1,4 @@
-package evgeny_shnayder.Shape;
+package evgeny_shnayder.shapes;
 
 public class Circle implements Shape {
     private double radius;
@@ -27,7 +27,7 @@ public class Circle implements Shape {
 
     @Override
     public double getArea() {
-        return Math.PI * Math.pow(radius, 2);
+        return Math.PI * radius * radius;
     }
 
     @Override
@@ -41,18 +41,18 @@ public class Circle implements Shape {
     }
 
     @Override
-    public boolean equals(Object circle) {
-        if (circle == this) {
+    public boolean equals(Object object) {
+        if (object == this) {
             return true;
         }
 
-        if (circle == null || circle.getClass() != getClass()) {
+        if (object == null || object.getClass() != getClass()) {
             return false;
         }
 
-        Circle testCircle = (Circle) circle;
+        Circle circle = (Circle) object;
 
-        return radius == testCircle.radius;
+        return radius == circle.radius;
     }
 
     @Override

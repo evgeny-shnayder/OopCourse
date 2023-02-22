@@ -1,4 +1,4 @@
-package evgeny_shnayder.Shape;
+package evgeny_shnayder.shapes;
 
 public class Rectangle implements Shape {
     private double width;
@@ -39,22 +39,22 @@ public class Rectangle implements Shape {
 
     @Override
     public String toString() {
-        return "Четырехугольник сторонами: " + this.getHeight() + " х " + getWidth();
+        return "Четырехугольник высотой: " + height + " и шириной: " + width;
     }
 
     @Override
-    public boolean equals(Object rectangle) {
-        if (rectangle == this) {
+    public boolean equals(Object object) {
+        if (object == this) {
             return true;
         }
 
-        if (rectangle == null || rectangle.getClass() != getClass()) {
+        if (object == null || object.getClass() != getClass()) {
             return false;
         }
 
-        Rectangle testRectangle = (Rectangle) rectangle;
+        Rectangle rectangle = (Rectangle) object;
 
-        return testRectangle.width == width && testRectangle.height == height;
+        return rectangle.width == width && rectangle.height == height;
     }
 
     @Override
