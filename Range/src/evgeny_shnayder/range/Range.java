@@ -60,6 +60,11 @@ public class Range {
                     : new Range[]{new Range(from, range.from), new Range(range.to, to)};
         }
 
-        return range.to < to ? new Range[]{new Range(range.to, to)} : new Range[]{new Range(0, 0)};
+        return range.to < to ? new Range[]{new Range(range.to, to)} : new Range[]{};
+    }
+
+    @Override
+    public String toString() {
+        return "от " + from + " до " + to;
     }
 }

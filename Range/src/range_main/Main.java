@@ -4,46 +4,50 @@ import evgeny_shnayder.range.Range;
 
 public class Main {
     public static void main(String[] args) {
-        Range range = new Range(3.14, 5.21);
+        Range range1 = new Range(3.14, 5.21);
 
         double number = 4.98;
-        String answer = range.isInside(number) ? "Да" : "Нет";
+        String answer = range1.isInside(number) ? "Да" : "Нет";
 
-        System.out.println("Длина промежутка: " + range.getLength());
-        System.out.println("Число " + number + " принадлежит промежутку от " + range.getFrom() + " до " + range.getTo()
-                + ": " + answer);
+        System.out.println("Длина интервала: " + range1.getLength());
+        System.out.println("Число " + number + " принадлежит интервалу " + range1 + ": " + answer);
 
-        range.setFrom(2.0);
-        range.setTo(4.21);
+        range1.setFrom(2.0);
+        range1.setTo(4.21);
 
-        answer = range.isInside(number) ? "Да" : "Нет";
+        answer = range1.isInside(number) ? "Да" : "Нет";
 
-        System.out.println("Длина промежутка: " + range.getLength());
-        System.out.println("Число " + number + " принадлежит промежутку от " + range.getFrom() + " до " + range.getTo()
-                + ": " + answer);
+        System.out.println("Длина интервала: " + range1.getLength());
+        System.out.println("Число " + number + " принадлежит интервалу " + range1 + ": " + answer);
 
-        Range range2 = new Range(4.21, 6.0);
+        Range range2 = new Range(2.0, 3.21);
 
-        if (range.getIntersection(range2) != null) {
-            Range mergeRange = range.getIntersection(range2);
-            System.out.println("Интервал - пересечение: " + mergeRange.getFrom() + " " + mergeRange.getTo());
+        Range intersection = range1.getIntersection(range2);
+
+        if (intersection != null) {
+            System.out.println("Интервал - пересечиние интервалов: " + intersection);
         } else {
-            System.out.println("Пересечения числовых интервалов от " + range.getFrom() + " до " + range.getTo() + " и "
-                    + range2.getFrom() + " до " + range2.getTo() + " нет");
+            System.out.println("Пересечения интервалов " + range1 + " и " + range2 + " нет");
         }
 
-        System.out.print("Объединение числовых интервалов:");
+        System.out.print("Объединение числовых интервалов: ");
 
-        for (Range e : range.getUnion(range2)) {
-            System.out.print(" " + e.getFrom() + " " + e.getTo());
+        for (Range range : range1.getUnion(range2)) {
+            System.out.print(range);
         }
 
         System.out.println();
 
-        System.out.print("Разность числовых интервалов:");
+        Range[] difference = range1.getDifference(range2);
 
-        for (Range e : range.getDifference(range2)) {
-            System.out.print(" от " + e.getFrom() + " до " + e.getTo());
+        if (difference.length != 0) {
+            System.out.print("Разность числовых интервалов:");
+
+            for (Range range : difference) {
+                System.out.print(" от " + range.getFrom() + " до " + range.getTo());
+            }
+        } else {
+            System.out.print("Разность числовых интервалов равна нулю");
         }
     }
 }
