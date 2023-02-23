@@ -7,9 +7,6 @@ public class Triangle implements Shape {
     private double y2;
     private double x3;
     private double y3;
-//    private final double sideLength1;
-//    private final double sideLength2;
-//    private final double sideLength3;
 
     public Triangle(double x1, double y1, double x2, double y2, double x3, double y3) {
         this.x1 = x1;
@@ -18,9 +15,6 @@ public class Triangle implements Shape {
         this.y2 = y2;
         this.x3 = x3;
         this.y3 = y3;
-//        sideLength1 = Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
-//        sideLength2 = Math.sqrt(Math.pow(x3 - x2, 2) + Math.pow(y3 - y2, 2));
-//        sideLength3 = Math.sqrt(Math.pow(x3 - x1, 2) + Math.pow(y3 - y1, 2));
     }
 
     public double getX1() {

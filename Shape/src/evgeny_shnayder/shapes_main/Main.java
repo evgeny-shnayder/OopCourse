@@ -1,5 +1,7 @@
 package evgeny_shnayder.shapes_main;
 
+import evgeny_shnayder.comparators.MaxAreaComparator;
+import evgeny_shnayder.comparators.MaxPerimeterComparator;
 import evgeny_shnayder.shapes.*;
 
 import java.util.Arrays;
@@ -11,6 +13,8 @@ public class Main {
 
         square.setWidth(4);
 
+        System.out.println(square);
+
         Triangle triangle = new Triangle(1.1, 5.1, 5.1, 1.1, 1.1, 5.1);
 
         triangle.setX1(1);
@@ -20,7 +24,6 @@ public class Main {
         triangle.setY2(1);
         triangle.setY3(5);
 
-        System.out.println(triangle);
         System.out.println("Треугольник с координатами точек: Х1 - " + triangle.getX1() + ", Y1 - "
                 + triangle.getY1() + ", X2 - " + triangle.getX2() + ", Y2 - " + triangle.getY2()
                 + ", X3 - " + triangle.getX3() + ", Y3 - " + triangle.getY3() + ".");
@@ -29,6 +32,8 @@ public class Main {
 
         rectangle.setHeight(3.9);
         rectangle.setWidth(2.4);
+
+        System.out.println(rectangle);
 
         Circle circle = new Circle(2.5);
 
@@ -51,26 +56,40 @@ public class Main {
             System.out.println(e + " периметр - " + e.getPerimeter());
         }
 
-        System.out.println("Максимальная площадь фигуры: " + sortMaxAreaShape(shapes));
-        System.out.println("Вторая по величине периметра фигура: " + sortMaxPerimeterShape(shapes));
+        System.out.println("Максимальная площадь фигуры: " + getMaxAreaShape(shapes));
+
+        System.out.println("Вторая по величине периметра фигура: " + getSecondLargestPerimeterShape(shapes));
 
         for (Shape e : shapes) {
             System.out.println(e + " hash: " + e.hashCode());
         }
 
-        System.out.println(circle + (circle.equals(shapes[2]) ? " равен " : " не равен ") + shapes[2]);
-        System.out.println(triangle + (triangle.equals(shapes[4]) ? " равен " : " не равен ") + shapes[4]);
-        System.out.println(square + (square.equals(shapes[3]) ? " равен " : " не равен ") + shapes[3]);
-        System.out.println(rectangle + (rectangle.equals(shapes[2]) ? " равен " : " не равен ") + shapes[2]);
+        for (Shape e : shapes) {
+            System.out.println(circle + (circle.equals(e) ? " равен " : " не равен ") + e);
+        }
     }
 
-    static Shape sortMaxAreaShape(Shape[] shapes) {
-        Arrays.sort(shapes, Comparator.comparing(Shape::getArea).reversed());
-        return shapes[0];
+    public static Shape getMaxAreaShape(Shape[] shapes) {
+        if (shapes.length == 0) {
+            return null;
+        }
+
+        Comparator<Shape> maxArea = new MaxAreaComparator();
+
+        Arrays.sort(shapes, maxArea);
+
+        return shapes[shapes.length - 1];
     }
 
-    static Shape sortMaxPerimeterShape(Shape[] shapes) {
-        Arrays.sort(shapes, Comparator.comparing(Shape::getPerimeter).reversed());
-        return shapes[1];
+    public static Shape getSecondLargestPerimeterShape(Shape[] shapes) {
+        if (shapes.length == 0) {
+            return null;
+        }
+
+        Comparator<Shape> maxPerimeter = new MaxPerimeterComparator();
+
+        Arrays.sort(shapes, maxPerimeter);
+
+        return shapes[shapes.length - 2];
     }
 }
