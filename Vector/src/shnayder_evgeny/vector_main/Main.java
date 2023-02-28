@@ -16,11 +16,11 @@ public class Main {
 
         Vector vector2 = new Vector(6, vector3.getVector());
 
-        System.out.println("Вектор номер 2: " + vector3);
+        System.out.println("Вектор номер 3: " + vector3);
 
         vector2.setIndexValue(5, 5.2);
 
-        System.out.println("Вектор номер 1: " + vector2);
+        System.out.println("Вектор номер 2: " + vector2);
 
         System.out.println("Сумма двух векторов: " + vector3.getSum(vector2));
 
@@ -34,6 +34,8 @@ public class Main {
 
         Vector vector4 = new Vector(vector2);
 
+        System.out.println(vector2);
+
         vector4.setIndexValue(4, 9.2);
 
         System.out.println(vector4.getIndexValue(4));
@@ -43,5 +45,11 @@ public class Main {
         System.out.println("Вычитание двух векторов: " + Vector.getDifference(vector4, vector3));
 
         System.out.println("Умножение двух векторов: " + Vector.getMultiplication(vector2, vector1));
+
+        System.out.println("Hash " + vector4 + " = " + vector4.hashCode());
+
+        System.out.println("Hash " + vector2 + " = " + vector2.hashCode());
+
+        System.out.println(vector4.equals(vector2) ? "векторы равны" : "векторы не равны");
     }
 }

@@ -22,7 +22,7 @@ public class Vector {
         }
 
         this.size = vector.vector.length;
-        this.vector = vector.vector;
+        this.vector = Arrays.copyOf(vector.vector, vector.size);
     }
 
     public Vector(double[] array) {
@@ -31,7 +31,7 @@ public class Vector {
         }
 
         this.size = array.length;
-        this.vector = array;
+        this.vector = Arrays.copyOf(array, array.length);
     }
 
     public Vector(int size, double[] array) {
