@@ -65,6 +65,6 @@ public class Range {
 
     @Override
     public String toString() {
-        return "от " + from + " до " + to;
+        return "(" + from + "; " + to + ")";
     }
 }
