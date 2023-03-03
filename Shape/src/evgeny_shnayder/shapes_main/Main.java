@@ -1,11 +1,10 @@
 package evgeny_shnayder.shapes_main;
 
-import evgeny_shnayder.comparators.MaxAreaComparator;
-import evgeny_shnayder.comparators.MaxPerimeterComparator;
+import evgeny_shnayder.shapes_comparators.AreaComparator;
+import evgeny_shnayder.shapes_comparators.PerimeterComparator;
 import evgeny_shnayder.shapes.*;
 
 import java.util.Arrays;
-import java.util.Comparator;
 
 public class Main {
     public static void main(String[] args) {
@@ -18,10 +17,10 @@ public class Main {
         Triangle triangle = new Triangle(1.1, 5.1, 5.1, 1.1, 1.1, 5.1);
 
         triangle.setX1(1);
-        triangle.setX2(5);
-        triangle.setX3(5);
         triangle.setY1(1);
-        triangle.setY2(1);
+        triangle.setX2(5);
+        triangle.setY2(2);
+        triangle.setX3(6);
         triangle.setY3(5);
 
         System.out.println("Треугольник с координатами точек: Х1 - " + triangle.getX1() + ", Y1 - "
@@ -43,7 +42,7 @@ public class Main {
                 new Circle(3),
                 new Square(3),
                 new Rectangle(2.4, 3.9),
-                new Triangle(1, 1, 5, 1, 5, 5),
+                new Triangle(1, 1, 1, 5.1, 6, 2),
                 new Circle(4.1),
                 new Square(4)
         };
@@ -56,7 +55,7 @@ public class Main {
             System.out.println(e + " периметр - " + e.getPerimeter());
         }
 
-        System.out.println("Максимальная площадь фигуры: " + getMaxAreaShape(shapes));
+        System.out.println("Фигура с максимальной площадью: " + getMaxAreaShape(shapes));
 
         System.out.println("Вторая по величине периметра фигура: " + getSecondLargestPerimeterShape(shapes));
 
@@ -74,9 +73,7 @@ public class Main {
             return null;
         }
 
-        Comparator<Shape> maxArea = new MaxAreaComparator();
-
-        Arrays.sort(shapes, maxArea);
+        Arrays.sort(shapes, new AreaComparator());
 
         return shapes[shapes.length - 1];
     }
@@ -86,9 +83,11 @@ public class Main {
             return null;
         }
 
-        Comparator<Shape> maxPerimeter = new MaxPerimeterComparator();
+        if (shapes.length == 1) {
+            return shapes[0];
+        }
 
-        Arrays.sort(shapes, maxPerimeter);
+        Arrays.sort(shapes, new PerimeterComparator());
 
         return shapes[shapes.length - 2];
     }

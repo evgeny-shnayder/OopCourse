@@ -34,7 +34,7 @@ public class Rectangle implements Shape {
 
     @Override
     public double getPerimeter() {
-        return (height * width) * 2;
+        return (height + width) * 2;
     }
 
     @Override
