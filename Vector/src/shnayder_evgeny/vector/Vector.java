@@ -82,7 +82,7 @@ public class Vector {
         return new Vector(getSumOrDifference(vector.vector, this.vector, -1, 1));
     }
 
-    public Vector getMultiplication(int scalar) {
+    public Vector getMultiplication(double scalar) {
         double[] needVector = Arrays.copyOf(this.vector, size);
 
         for (int i = 0; i < size; i++) {
@@ -103,6 +103,10 @@ public class Vector {
     }
 
     public double getIndexValue(int index) {
+        if (index >= size) {
+            throw new ArrayIndexOutOfBoundsException("Заданный индекс больше размерности вектора.");
+        }
+
         return vector[index];
     }
 
