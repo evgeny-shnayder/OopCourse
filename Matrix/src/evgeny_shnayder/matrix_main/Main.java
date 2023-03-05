@@ -45,7 +45,7 @@ public class Main {
 
         matrix5.setColumSize(1);
 
-        matrix2.setRowSize(1);
+        matrix2.setRowSize(3);
 
         System.out.println("Матрица 2: " + matrix2);
 

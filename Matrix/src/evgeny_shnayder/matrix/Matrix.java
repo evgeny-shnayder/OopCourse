@@ -74,14 +74,14 @@ public class Matrix extends Vector {
 
         int minSize = Math.min(this.rowSize, rowSize);
 
-        Vector[] vectors = new Vector[rowSize];
+        Matrix needMatrix = new Matrix(rowSize, columSize);
 
         for (int i = 0; i < minSize; i++) {
-            vectors[i] = new Vector(Arrays.copyOf(row[i].getVector(), columSize));
+            needMatrix.row[i] = new Vector(Arrays.copyOf(row[i].getVector(), columSize));
         }
 
         this.rowSize = rowSize;
-        this.row = vectors;
+        this.row = needMatrix.row;
     }
 
     public int[] getMatrixSize() {
