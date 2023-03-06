@@ -47,24 +47,24 @@ public class Main {
                 new Square(4)
         };
 
-        for (Shape e : shapes) {
-            System.out.println(e);
-            System.out.println(e + " шириной - " + e.getWidth());
-            System.out.println(e + " высотой - " + e.getHeight());
-            System.out.println(e + " площадь - " + e.getArea());
-            System.out.println(e + " периметр - " + e.getPerimeter());
+        for (Shape shape : shapes) {
+            System.out.println(shape);
+            System.out.println(shape + " шириной - " + shape.getWidth());
+            System.out.println(shape + " высотой - " + shape.getHeight());
+            System.out.println(shape + " площадь - " + shape.getArea());
+            System.out.println(shape + " периметр - " + shape.getPerimeter());
         }
 
         System.out.println("Фигура с максимальной площадью: " + getMaxAreaShape(shapes));
 
         System.out.println("Вторая по величине периметра фигура: " + getSecondLargestPerimeterShape(shapes));
 
-        for (Shape e : shapes) {
-            System.out.println(e + " hash: " + e.hashCode());
+        for (Shape shape : shapes) {
+            System.out.println(shape + " hash: " + shape.hashCode());
         }
 
-        for (Shape e : shapes) {
-            System.out.println(circle + (circle.equals(e) ? " равен " : " не равен ") + e);
+        for (Shape shape : shapes) {
+            System.out.println(circle + (circle.equals(shape) ? " равен " : " не равен ") + shape);
         }
     }
 
@@ -79,12 +79,8 @@ public class Main {
     }
 
     public static Shape getSecondLargestPerimeterShape(Shape[] shapes) {
-        if (shapes.length == 0) {
+        if (shapes.length == 0 || shapes.length == 1) {
             return null;
-        }
-
-        if (shapes.length == 1) {
-            return shapes[0];
         }
 
         Arrays.sort(shapes, new PerimeterComparator());

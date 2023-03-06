@@ -80,11 +80,13 @@ public class Triangle implements Shape {
         return Math.abs((x2 - x1) * (y3 - y1) - (x3 - x1) * (y2 - y1)) / 2;
     }
 
+    private double getSideLength(double x1, double y1, double x2, double y2) {
+        return Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
+    }
+
     @Override
     public double getPerimeter() {
-        return Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2))
-                + Math.sqrt(Math.pow(x3 - x2, 2) + Math.pow(y3 - y2, 2))
-                + Math.sqrt(Math.pow(x3 - x1, 2) + Math.pow(y3 - y1, 2));
+        return getSideLength(x1, y1, x2, y2) + getSideLength(x2, y2, x3, y3) + getSideLength(x1, y1, x3, y3);
     }
 
     @Override
@@ -107,6 +109,7 @@ public class Triangle implements Shape {
         return triangle.x1 == x1 && triangle.x2 == x2 && triangle.x3 == x3
                 && triangle.y1 == y1 && triangle.y2 == y2 && triangle.y3 == y3;
     }
+
     @Override
     public int hashCode() {
         final int prime = 37;
