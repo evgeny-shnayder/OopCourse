@@ -79,7 +79,7 @@ public class Main {
     }
 
     public static Shape getSecondLargestPerimeterShape(Shape[] shapes) {
-        if (shapes.length == 0 || shapes.length == 1) {
+        if (shapes.length < 2) {
             return null;
         }
 
