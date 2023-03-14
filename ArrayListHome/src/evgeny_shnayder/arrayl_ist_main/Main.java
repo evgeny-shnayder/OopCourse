@@ -6,10 +6,9 @@ import java.util.ArrayList;
 
 public class Main {
     public static void main(String[] args) {
-        ArrayListHome<Integer> list = new ArrayListHome<>("file.txt");
+        ArrayListHome list = new ArrayListHome("file.txt");
 
         System.out.println("Список из содержимого файла: " + list);
-        System.out.println("Список без повторов: " + list.getWithoutRepeatsList());
 
         ArrayList<Integer> list1 = new ArrayList<>();
 
@@ -17,9 +16,14 @@ public class Main {
             list1.add(i);
         }
 
+        list1.add(1);
+        list1.add(2, 1);
+
+        System.out.println("Список: " + list1);
+
         ArrayListHome.convertToOddNumbersList(list1);
 
         System.out.println("Удалены все четные числа из списка: " + list1);
-        System.out.println("Список без повторов: " + list.getWithoutRepeatsList());
+        System.out.println("Список без повторов: " + ArrayListHome.getWithoutRepeatsList(list1));
     }
 }

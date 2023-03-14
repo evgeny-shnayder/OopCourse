@@ -6,8 +6,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-public class ArrayListHome<T> {
-    private List<T> list;
+public class ArrayListHome {
+    private List<String> list;
 
     public ArrayListHome(String fileName) {
         try (Scanner file = new Scanner(new FileInputStream(fileName))) {
@@ -15,18 +15,7 @@ public class ArrayListHome<T> {
                 list = new ArrayList<>();
 
                 while (file.hasNext()) {
-                    int i = 0;
-
-                    T[] line = (T[]) file.nextLine().split(" ");
-
-                    if (line.length < 2) {
-                        list.add(line[i]);
-                    } else {
-                        while (i < line.length) {
-                            list.add(line[i]);
-                            i++;
-                        }
-                    }
+                    list.add(file.nextLine());
                 }
             } else {
                 throw new RuntimeException("Файл " + fileName + " пустой.");
@@ -38,15 +27,15 @@ public class ArrayListHome<T> {
 
     public static void convertToOddNumbersList(ArrayList<Integer> list) {
         for (int i = 0; i < list.size(); i++) {
-            if ( list.get(i) % 2 == 0) {
+            if (list.get(i) % 2 == 0) {
                 list.remove(i);
                 i--;
             }
         }
     }
 
-    public ArrayList<T> getWithoutRepeatsList() {
-        ArrayList<T> withoutRepeatsList = new ArrayList<>();
+    public static ArrayList<Integer> getWithoutRepeatsList(ArrayList<Integer> list) {
+        ArrayList<Integer> withoutRepeatsList = new ArrayList<>();
 
         for (int i = 0; i < list.size(); i++) {
             if (list.indexOf(list.get(i)) == i) {
