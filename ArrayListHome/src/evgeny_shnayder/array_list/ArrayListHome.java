@@ -1,42 +1,52 @@
 package evgeny_shnayder.array_list;
 
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
-public class ArrayListHome {
-    private ArrayList<Integer> list;
+public class ArrayListHome<T> {
+    private List<T> list;
 
     public ArrayListHome(String fileName) {
-        try {
-            Scanner file = new Scanner(new FileInputStream(fileName));
-
+        try (Scanner file = new Scanner(new FileInputStream(fileName))) {
             if (file.hasNext()) {
                 list = new ArrayList<>();
 
                 while (file.hasNext()) {
-                    list.add(file.nextInt());
+                    int i = 0;
+
+                    T[] line = (T[]) file.nextLine().split(" ");
+
+                    if (line.length < 2) {
+                        list.add(line[i]);
+                    } else {
+                        while (i < line.length) {
+                            list.add(line[i]);
+                            i++;
+                        }
+                    }
                 }
             } else {
                 throw new RuntimeException("Файл " + fileName + " пустой.");
             }
-        } catch (FileNotFoundException e) {
+        } catch (IOException e) {
             throw new RuntimeException("Файл " + fileName + " не найден.");
         }
     }
 
-    public void convertToOddNumbersList() {
+    public static void convertToOddNumbersList(ArrayList<Integer> list) {
         for (int i = 0; i < list.size(); i++) {
-            if (list.get(i) % 2 == 0) {
+            if ( list.get(i) % 2 == 0) {
                 list.remove(i);
                 i--;
             }
         }
     }
 
-    public ArrayList<Integer> getWithoutRepeatsList() {
-        ArrayList<Integer> withoutRepeatsList = new ArrayList<>();
+    public ArrayList<T> getWithoutRepeatsList() {
+        ArrayList<T> withoutRepeatsList = new ArrayList<>();
 
         for (int i = 0; i < list.size(); i++) {
             if (list.indexOf(list.get(i)) == i) {
