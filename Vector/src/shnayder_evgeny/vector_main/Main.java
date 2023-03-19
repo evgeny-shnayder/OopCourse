@@ -21,22 +21,24 @@ public class Main {
 
         vector3.add(vector2);
         System.out.println("Сумма двух векторов: " + vector3);
+        System.out.println("Вектор номер 2: " + vector2);
 
         vector3.subtract(vector2);
         System.out.println("Разность двух векторов: " + vector3);
+        System.out.println("Вектор номер 2: " + vector2);
 
         vector2.multiplyByScalar(2);
         System.out.println("Умножение вектора на число: " + vector2);
         System.out.println("Длина вектора: " + vector2.getLength());
 
-        vector2.reversal();
+        vector2.reverse();
         System.out.println("Разворот вектора: " + vector2);
 
         Vector vector4 = new Vector(vector2);
         System.out.println(vector2);
 
-        vector4.setComponent(4, 9.2);
-        System.out.println(vector4.getComponent(4));
+        vector4.setComponent(2, 9.2);
+        System.out.println(vector4.getComponent(6));
 
         System.out.println("Сложение двух векторов: " + Vector.getSum(vector4, vector3));
         System.out.println("Вычитание двух векторов: " + Vector.getDifference(vector4, vector3));
