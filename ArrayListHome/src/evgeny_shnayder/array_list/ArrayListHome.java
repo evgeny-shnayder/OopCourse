@@ -1,31 +1,50 @@
 package evgeny_shnayder.array_list;
 
 import java.io.FileInputStream;
-import java.io.IOException;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
-import java.util.List;
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class ArrayListHome {
-    private List<String> list;
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
 
-    public ArrayListHome(String fileName) {
-        try (Scanner file = new Scanner(new FileInputStream(fileName))) {
-            if (file.hasNext()) {
-                list = new ArrayList<>();
+        System.out.println("Введите имя файла:");
+        String fileName = scanner.nextLine();
 
-                while (file.hasNext()) {
-                    list.add(file.nextLine());
-                }
-            } else {
-                throw new RuntimeException("Файл " + fileName + " пустой.");
+        try {
+            System.out.println(recordFromFile(fileName));
+        } catch (FileNotFoundException e) {
+            System.out.println("Файл с именем " + fileName + " не найден. Введите правильное имя файла!");
+        }
+
+        ArrayList<Integer> list = new ArrayList<>(Arrays.asList(5, 48, 2, 4, 81, 28, 81, 4, 4, 5, 4));
+
+        System.out.println(list);
+
+        removeEvenNumbers(list);
+
+        System.out.println(list);
+        System.out.println(getListWithoutRepeats(list));
+    }
+
+    public static ArrayList<String> recordFromFile(String fileName) throws FileNotFoundException {
+        Scanner file = new Scanner(new FileInputStream(fileName));
+        if (!file.hasNext()) {
+            throw new RuntimeException("Файл " + fileName + " пустой.");
+        } else {
+            ArrayList<String> list = new ArrayList<>();
+
+            while (file.hasNext()) {
+                list.add(file.next());
             }
-        } catch (IOException e) {
-            throw new RuntimeException("Файл " + fileName + " не найден.");
+
+            return list;
         }
     }
 
-    public static void convertToOddNumbersList(ArrayList<Integer> list) {
+    public static void removeEvenNumbers(ArrayList<Integer> list) {
         for (int i = 0; i < list.size(); i++) {
             if (list.get(i) % 2 == 0) {
                 list.remove(i);
@@ -34,20 +53,15 @@ public class ArrayListHome {
         }
     }
 
-    public static ArrayList<Integer> getWithoutRepeatsList(ArrayList<Integer> list) {
-        ArrayList<Integer> withoutRepeatsList = new ArrayList<>();
+    public static ArrayList<Integer> getListWithoutRepeats(ArrayList<Integer> list) {
+        ArrayList<Integer> listWithoutRepeats = new ArrayList<>(list);
 
-        for (int i = 0; i < list.size(); i++) {
-            if (list.indexOf(list.get(i)) == i) {
-                withoutRepeatsList.add(list.get(i));
+        for (int i = 0; i < listWithoutRepeats.size(); i++) {
+            while (listWithoutRepeats.lastIndexOf(listWithoutRepeats.get(i)) != i) {
+                listWithoutRepeats.remove(i);
             }
         }
 
-        return withoutRepeatsList;
-    }
-
-    @Override
-    public String toString() {
-        return list.toString();
+        return listWithoutRepeats;
     }
 }
