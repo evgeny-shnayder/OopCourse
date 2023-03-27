@@ -42,10 +42,8 @@ public class Vector {
             components = Arrays.copyOf(components, vector.components.length);
         }
 
-        double[] components = Arrays.copyOf(vector.components, this.components.length);
-
-        for (int i = 0; i < this.components.length; i++) {
-            this.components[i] += components[i];
+        for (int i = 0; i < vector.components.length; i++) {
+            this.components[i] += vector.components[i];
         }
     }
 
@@ -54,10 +52,8 @@ public class Vector {
             components = Arrays.copyOf(components, vector.components.length);
         }
 
-        double[] components = Arrays.copyOf(vector.components, this.components.length);
-
-        for (int i = 0; i < this.components.length; i++) {
-            this.components[i] -= components[i];
+        for (int i = 0; i < vector.components.length; i++) {
+            this.components[i] -= vector.components[i];
         }
     }
 
@@ -84,7 +80,7 @@ public class Vector {
     public double getComponent(int index) {
         if (index < 0 || index >= components.length) {
             throw new IndexOutOfBoundsException("Заданный индекс " + index + " выходит за диапазон размерности вектора" +
-                    " от 0 до " + components.length + ".");
+                    " от 0 до " + (components.length - 1) + " включительно.");
         }
 
         return components[index];
@@ -93,7 +89,7 @@ public class Vector {
     public void setComponent(int index, double value) {
         if (index < 0 || index >= components.length) {
             throw new IndexOutOfBoundsException("Заданный индекс " + index + " выходит за диапазон размерности вектора" +
-                    " от 0 до " + components.length + ".");
+                    " от 0 до " + (components.length - 1) + " включительно.");
         }
 
         components[index] = value;
@@ -103,14 +99,14 @@ public class Vector {
     public String toString() {
         StringBuilder stringBuilder = new StringBuilder();
 
-        stringBuilder.append("{");
+        stringBuilder.append('{');
 
         for (double component : components) {
             stringBuilder.append(component).append(", ");
         }
 
         stringBuilder.delete(stringBuilder.length() - 2, stringBuilder.length());
-        stringBuilder.append("}");
+        stringBuilder.append('}');
 
         return stringBuilder.toString();
     }
@@ -136,11 +132,11 @@ public class Vector {
     }
 
     public static Vector getSum(Vector vector1, Vector vector2) {
-        Vector resultantVector = new Vector(vector1);
+        Vector resultVector = new Vector(vector1);
 
-        resultantVector.add(vector2);
+        resultVector.add(vector2);
 
-        return resultantVector;
+        return resultVector;
     }
 
     public static Vector getDifference(Vector vector1, Vector vector2) {

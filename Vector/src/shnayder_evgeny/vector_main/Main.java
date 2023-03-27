@@ -11,11 +11,11 @@ public class Main {
         double[] array = {1.0, 2.0, 3.1, 5.2, 7};
 
         Vector vector3 = new Vector(array);
-        Vector vector2 = new Vector(3, array);
+        Vector vector2 = new Vector(6, array);
 
         System.out.println("Вектор номер 3: " + vector3);
 
-        vector2.setComponent(2, 5.2);
+        vector2.setComponent(5, 5.2);
 
         System.out.println("Вектор номер 2: " + vector2);
 
@@ -38,7 +38,7 @@ public class Main {
         System.out.println(vector2);
 
         vector4.setComponent(2, 9.2);
-        System.out.println(vector4.getComponent(6));
+        System.out.println(vector4.getComponent(1));
 
         System.out.println("Сложение двух векторов: " + Vector.getSum(vector4, vector3));
         System.out.println("Вычитание двух векторов: " + Vector.getDifference(vector4, vector3));
