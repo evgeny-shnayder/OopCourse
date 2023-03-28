@@ -2,8 +2,6 @@ package evgeny_shnayder.list_main;
 
 import evgeny_shnayder.list.SinglyLinkedList;
 
-import java.util.Arrays;
-
 public class Main {
     public static void main(String[] args) {
         SinglyLinkedList<Integer> list1 = new SinglyLinkedList<>(25);
