@@ -1,8 +1,13 @@
 package evgeny_shnayder.list;
 
+import java.util.NoSuchElementException;
+
 public class SinglyLinkedList<T> {
     private int count;
     private ListItem<T> head;
+
+    public SinglyLinkedList() {
+    }
 
     public SinglyLinkedList(T data) {
         head = new ListItem<>(data);
@@ -10,12 +15,12 @@ public class SinglyLinkedList<T> {
     }
 
     public SinglyLinkedList(SinglyLinkedList<T> list) {
-        this.head = list.head;
+        head = new ListItem<>(list.head.getData());
         this.count = list.count;
 
-        for (ListItem<T> node = head; node != null; node = node.getNext()) {
-            ListItem<T> newNode = new ListItem<>(node.getData());
-            newNode.setNext(node.getNext());
+        for (ListItem<T> copyNode = head, node = list.head.getNext(); node != null;
+             node = node.getNext(), copyNode = copyNode.getNext()) {
+            copyNode.setNext(new ListItem<>(node.getData()));
         }
     }
 
@@ -23,137 +28,174 @@ public class SinglyLinkedList<T> {
         return count;
     }
 
-    public T getFirstValue() {
+    public T getFirst() {
+        checkSizeList();
+
         return head.getData();
     }
 
-    private ListItem<T> getOnIndexItem(int index) {
-        if (index <= 0 || index > count) {
-            throw new IllegalArgumentException("Указанное значение " + index + " больше длинны списка или меньше нуля.");
+    private void checkIndex(int index) {
+        if (index < 0 || index > count) {
+            throw new IndexOutOfBoundsException("Заданный индекс " + index + " выходит за размер списка" + " от 0 до "
+                    + (count - 1) + " включительно.");
         }
 
-        ListItem<T> currentNode = head;
-        int nodeCount = 1;
+    }
 
-        while (nodeCount < index) {
+    private void checkSizeList() {
+        if (count == 0) {
+            throw new NoSuchElementException("В списке отсутствуют элементы.");
+        }
+    }
+
+    private ListItem<T> getItemByIndex(int index) {
+        ListItem<T> currentNode = head;
+        int i = 0;
+
+        while (i < index) {
             currentNode = currentNode.getNext();
-            nodeCount++;
+            i++;
         }
 
         return currentNode;
     }
 
-    public T getOnIndexValue(int index) {
-        return getOnIndexItem(index).getData();
+    public T getByIndex(int index) {
+        checkIndex(index);
+
+        return getItemByIndex(index).getData();
     }
 
-    public T setValueOnIndex(int index, T data) {
-        ListItem<T> neededNode = getOnIndexItem(index);
-        T lastValue = neededNode.getData();
-        neededNode.setData(data);
+    public T setByIndex(int index, T data) {
+        checkIndex(index);
 
-        return lastValue;
+        ListItem<T> node = getItemByIndex(index);
+        T oldData = node.getData();
+        node.setData(data);
+
+        return oldData;
     }
 
-    public T removeItem(int index) {
-        T lastValue = getOnIndexItem(index).getData();
+    public T removeByIndex(int index) {
+        checkIndex(index);
 
-        if (index == 1) {
-            head = head.getNext();
-            count--;
+        T deletedData = getItemByIndex(index).getData();
 
-            return lastValue;
+        if (index == 0) {
+            removeFirst();
+
+            return deletedData;
         }
 
-        if (index == count) {
-            getOnIndexItem(index - 1).setNext(null);
-            count--;
+        int i = 1;
 
-            return lastValue;
+        for (ListItem<T> currentNode = head.getNext(), prevNode = head; currentNode != null;
+             prevNode = currentNode, currentNode = currentNode.getNext()) {
+            if (i == index) {
+                prevNode.setNext(currentNode.getNext());
+                count--;
+
+                break;
+            }
+
+            i++;
         }
 
-        getOnIndexItem(index - 1).setNext(getOnIndexItem(index + 1));
-        count--;
-
-        return lastValue;
+        return deletedData;
     }
 
-    public void addBeforeItems(T data) {
-        ListItem<T> newNode = new ListItem<>(data);
-        newNode.setNext(head);
-        head = newNode;
+    public void addFirst(T data) {
+        head = new ListItem<>(data, head);
         count++;
     }
 
-    public void addItem(int index, T data) {
-        if (index <= 0 || index > count + 1) {
-            throw new IllegalArgumentException("Указанное значение " + index + " больше длинны списка или меньше нуля.");
-        }
+    public void addByIndex(int index, T data) {
+        checkIndex(index);
 
-        if (index == 1) {
-            addBeforeItems(data);
-        } else if (index > count) {
-            getOnIndexItem(index - 1).setNext(new ListItem<>(data));
-            count++;
+        if (index == 0) {
+            addFirst(data);
         } else {
-            ListItem<T> lastItem = getOnIndexItem(index);
-            getOnIndexItem(index - 1).setNext(new ListItem<>(data, lastItem));
+            ListItem<T> currentNode = head;
+            int i = index;
+
+            while (i > 0) {
+                currentNode = currentNode.getNext();
+                i--;
+            }
+
+            currentNode.setNext(new ListItem<>(data, currentNode.getNext()));
             count++;
         }
     }
 
-    public boolean removeByValueItem(T data) {
-        int count = 1;
+    public boolean removeByData(T data) {
+        if (head.getData() == data) {
+            removeFirst();
 
-        for (ListItem<T> node = head; node != null; node = node.getNext()) {
-            if (node.getData().equals(data)) {
-                removeItem(count);
-                this.count--;
+            return true;
+        }
+
+        for (ListItem<T> currentNode = head.getNext(), prevNode = head; currentNode != null;
+             prevNode = currentNode, currentNode = currentNode.getNext()) {
+            if (currentNode.getData() == data) {
+                prevNode.setNext(currentNode.getNext());
+                count--;
 
                 return true;
             }
-
-            count++;
         }
 
         return false;
     }
 
-    public T removeFirstItem() {
-        T lastValue = head.getData();
+    public T removeFirst() {
+        checkSizeList();
+
+        T deletedData = head.getData();
 
         head = head.getNext();
         count--;
 
-        return lastValue;
+        return deletedData;
     }
 
-    public void revers() {
-        ListItem<T> lastItem = null;
+    public void reverse() {
+        checkSizeList();
+
+        ListItem<T> prevItem = null;
         ListItem<T> currentItem = head;
         ListItem<T> nextItem = head.getNext();
 
         while (nextItem != null) {
-            currentItem.setNext(lastItem);
-            lastItem = currentItem;
+            currentItem.setNext(prevItem);
+            prevItem = currentItem;
             currentItem = nextItem;
             nextItem = currentItem.getNext();
         }
 
-        currentItem.setNext(lastItem);
+        currentItem.setNext(prevItem);
         head = currentItem;
     }
 
     @Override
     public String toString() {
-        StringBuilder result = new StringBuilder();
+        if (count == 0) {
+            return "[]";
+        }
+
+        StringBuilder stringBuilder = new StringBuilder();
         ListItem<T> node = head;
 
+        stringBuilder.append('[');
+
         while (node != null) {
-            result.append(node.getData()).append(" ");
+            stringBuilder.append(node.getData()).append(", ");
             node = node.getNext();
         }
 
-        return result.toString();
+        stringBuilder.delete(stringBuilder.length() - 2, stringBuilder.length());
+        stringBuilder.append(']');
+
+        return stringBuilder.toString();
     }
 }
