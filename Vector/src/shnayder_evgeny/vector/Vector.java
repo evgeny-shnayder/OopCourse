@@ -43,7 +43,7 @@ public class Vector {
         }
 
         for (int i = 0; i < vector.components.length; i++) {
-            this.components[i] += vector.components[i];
+            components[i] += vector.components[i];
         }
     }
 
@@ -53,7 +53,7 @@ public class Vector {
         }
 
         for (int i = 0; i < vector.components.length; i++) {
-            this.components[i] -= vector.components[i];
+            components[i] -= vector.components[i];
         }
     }
 
@@ -140,11 +140,11 @@ public class Vector {
     }
 
     public static Vector getDifference(Vector vector1, Vector vector2) {
-        Vector resultantVector = new Vector(vector1);
+        Vector resultVector = new Vector(vector1);
 
-        resultantVector.subtract(vector2);
+        resultVector.subtract(vector2);
 
-        return resultantVector;
+        return resultVector;
     }
 
     public static double getScalarProduct(Vector vector1, Vector vector2) {
