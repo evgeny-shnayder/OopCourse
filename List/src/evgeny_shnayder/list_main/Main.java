@@ -19,7 +19,7 @@ public class Main {
         System.out.println("Значение узла по индексу: " + list1.getByIndex(1));
         System.out.println("Предыдущее значение по индексу после изменения: " + list1.setByIndex(2, 9));
         System.out.println("Значение удаленного элемента по индексу: " + list1.removeByIndex(2));
-        System.out.println("список 1: " + list1);
+        System.out.println("Список 1: " + list1);
         System.out.println("Размер списка: " + list1.getCount());
 
         list1.addByIndex(1, null);
@@ -40,24 +40,34 @@ public class Main {
         list3.addFirst("cool");
 
         System.out.println(list3.removeByData(null));
+        System.out.println(list3.removeByData("cool"));
 
-        System.out.println("список 3: " + list3);
-        System.out.println("список 1: " + list1);
+        System.out.println("Список 3: " + list3);
+        System.out.println("Список 1: " + list1);
 
         SinglyLinkedList<Integer> list2 = new SinglyLinkedList<>(list1);
 
-        System.out.println("список 2: " + list2);
+        System.out.println("Список 2: " + list2);
 
         list1.setByIndex(2, 35);
         list1.setByIndex(0, 89);
 
-        System.out.println("список 1: " + list1);
-        System.out.println("список 2: " + list2);
-        System.out.println("размер списка 2: " + list2.getCount());
+        System.out.println("Список 1: " + list1);
+        System.out.println("Список 2: " + list2);
+        System.out.println("Размер списка 2: " + list2.getCount());
+        list2.addByIndex(4, 1);
+        System.out.println("Значение списка 2 по индексу 3: " + list2.getByIndex(3));
+        System.out.println("Список 2: " + list2);
 
         SinglyLinkedList<Integer> list4 = new SinglyLinkedList<>();
+        SinglyLinkedList<Integer> list5 = new SinglyLinkedList<>(list4);
+        list5.addFirst(2);
 
-        System.out.println("список 4: " + list4);
-        list4.reverse();
+        System.out.println("Список 4: " + list4);
+        System.out.println("Список 5: " + list5);
+        System.out.println("Размер списка 5: " + list5.getCount());
+
+        list5.reverse();
+        System.out.println("Список 5: " + list5);
     }
 }

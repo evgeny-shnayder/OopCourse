@@ -28,4 +28,23 @@ class ListItem<T> {
     public void setNext(ListItem<T> next) {
         this.next = next;
     }
+
+    @Override
+    public boolean equals(Object object) {
+        if (object == this) {
+            return true;
+        }
+
+        if (object == null || object.getClass() != getClass()) {
+            return false;
+        }
+
+        ListItem<T> item = (ListItem<T>) object;
+
+        if (item.data == null || data == null) {
+            return item.data == data;
+        }
+
+        return item.data.equals(data);
+    }
 }
