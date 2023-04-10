@@ -13,26 +13,24 @@ public class ArrayListHome {
         System.out.println("Введите имя файла:");
         String fileName = scanner.nextLine();
 
-        try {
-            System.out.println(getFileLines(fileName));
-        } catch (FileNotFoundException e) {
-            System.out.println("Файл с именем " + fileName + " не найден. Введите правильное имя файла!");
-        }
+        System.out.println("Строки из файла: " + getFileLines(fileName));
 
         ArrayList<Integer> list = new ArrayList<>(Arrays.asList(5, 48, 2, 4, 81, 28, 81, 4, 4, 5, 4));
 
-        System.out.println(list);
+        System.out.println("Список: " + list);
 
         removeEvenNumbers(list);
 
-        System.out.println(list);
-        System.out.println(getListWithoutRepeats(list));
+        System.out.println("Список без четных чисел: " + list);
+        System.out.println("Список без повторов: " + getListWithoutRepeats(list));
     }
 
-    public static ArrayList<String> getFileLines(String fileName) throws FileNotFoundException {
-        BufferedReader bufferedReader = new BufferedReader(new FileReader(fileName));
-
-        return bufferedReader.lines().collect(Collectors.toCollection(ArrayList::new));
+    public static ArrayList<String> getFileLines(String fileName) {
+        try (BufferedReader bufferedReader = new BufferedReader(new FileReader(fileName))) {
+            return bufferedReader.lines().collect(Collectors.toCollection(ArrayList::new));
+        } catch (IOException e) {
+            throw new RuntimeException(e.getMessage());
+        }
     }
 
     public static void removeEvenNumbers(ArrayList<Integer> list) {
@@ -45,6 +43,14 @@ public class ArrayListHome {
     }
 
     public static ArrayList<Integer> getListWithoutRepeats(ArrayList<Integer> list) {
-        return list.stream().distinct().collect(Collectors.toCollection(ArrayList::new));
+        ArrayList<Integer> listWithoutRepeats = new ArrayList<>(list.size());
+
+        for (Integer integer : list) {
+            if (!listWithoutRepeats.contains(integer)) {
+                listWithoutRepeats.add(integer);
+            }
+        }
+
+        return listWithoutRepeats;
     }
 }
