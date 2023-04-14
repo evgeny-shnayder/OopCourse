@@ -8,6 +8,8 @@ public class Main {
         Matrix matrix1 = new Matrix(3, 3);
 
         System.out.println("Матрица 1: " + matrix1);
+        System.out.println("Количество столбцов матрицы 1: " + matrix1.getColumnsCount());
+        System.out.println("Количество строк матрицы 1: " + matrix1.getRowsCount());
 
         double[][] array = {{1, 2, 3}, {4, 5, 6}};
 
@@ -25,7 +27,7 @@ public class Main {
 
         System.out.println("Матрица 3: " + matrix3);
 
-        Vector vector = new Vector(new double[]{1, 6, 9, 17});
+        Vector vector = new Vector(new double[]{1, 6, 9});
 
         matrix1.setRow(0, vector);
 
@@ -45,9 +47,9 @@ public class Main {
 
         System.out.println("Матрица 2: " + matrix2);
 
-        System.out.println("Столбец матрицы: " + matrix3.getColumn(1));
+        System.out.println("Столбец матрицы 3: " + matrix3.getColumn(1));
 
-        System.out.println("Строка матрицы: " + matrix3.getRow(1));
+        System.out.println("Строка матрицы 3: " + matrix3.getRow(1));
 
         System.out.println("Произведение на вектор: " + matrix3.multiplyByVector(new Vector(new double[]{1, 3, 5})));
 
