@@ -1,6 +1,7 @@
 package evgeny_shnayder.list;
 
 import java.util.NoSuchElementException;
+import java.util.Objects;
 
 public class SinglyLinkedList<T> {
     private int count;
@@ -15,14 +16,16 @@ public class SinglyLinkedList<T> {
     }
 
     public SinglyLinkedList(SinglyLinkedList<T> list) {
-        if (list.count > 0) {
-            head = new ListItem<>(list.head.getData());
-            count = list.count;
+        if (list.count < 1) {
+            return;
+        }
 
-            for (ListItem<T> copyItem = head, item = list.head.getNext(); item != null;
-                 item = item.getNext(), copyItem = copyItem.getNext()) {
-                copyItem.setNext(new ListItem<>(item.getData()));
-            }
+        head = new ListItem<>(list.head.getData());
+        count = list.count;
+
+        for (ListItem<T> copyItem = head, item = list.head.getNext(); item != null;
+             item = item.getNext(), copyItem = copyItem.getNext()) {
+            copyItem.setNext(new ListItem<>(item.getData()));
         }
     }
 
@@ -31,7 +34,7 @@ public class SinglyLinkedList<T> {
     }
 
     public T getFirst() {
-        checkListToEmpty();
+        checkListIsEmpty();
 
         return head.getData();
     }
@@ -43,7 +46,7 @@ public class SinglyLinkedList<T> {
         }
     }
 
-    private void checkListToEmpty() {
+    private void checkListIsEmpty() {
         if (count == 0) {
             throw new NoSuchElementException("В списке отсутствуют элементы.");
         }
@@ -82,12 +85,13 @@ public class SinglyLinkedList<T> {
             return removeFirst();
         }
 
-        ListItem<T> removedItem = getItemByIndex(index);
+        ListItem<T> previousItem = getItemByIndex(index - 1);
+        T removedData = previousItem.getNext().getData();
 
-        getItemByIndex(index - 1).setNext(removedItem.getNext());
+        previousItem.setNext(previousItem.getNext().getNext());
         count--;
 
-        return removedItem.getData();
+        return removedData;
     }
 
     public void addFirst(T data) {
@@ -97,16 +101,18 @@ public class SinglyLinkedList<T> {
 
     public void addByIndex(int index, T data) {
         if (index < 0 || index > count) {
-            throw new IndexOutOfBoundsException("Заданный индекс " + index + " больше размера списка " + count + ".");
+            throw new IndexOutOfBoundsException("Заданный индекс " + index + " должен быть в диапазоне от 0 " + count
+                    + " включительно.");
         }
 
         if (index == 0) {
             addFirst(data);
-        } else {
-            ListItem<T> previousItem = getItemByIndex(index - 1);
-            previousItem.setNext(new ListItem<>(data, previousItem.getNext()));
-            count++;
+            return;
         }
+
+        ListItem<T> previousItem = getItemByIndex(index - 1);
+        previousItem.setNext(new ListItem<>(data, previousItem.getNext()));
+        count++;
     }
 
     public boolean removeByData(T data) {
@@ -114,9 +120,7 @@ public class SinglyLinkedList<T> {
             return false;
         }
 
-        ListItem<T> dataItem = new ListItem<>(data);
-
-        if (head.equals(dataItem)) {
+        if (Objects.equals(head.getData(), data)) {
             removeFirst();
 
             return true;
@@ -124,7 +128,7 @@ public class SinglyLinkedList<T> {
 
         for (ListItem<T> currentItem = head.getNext(), previousItem = head; currentItem != null;
              previousItem = currentItem, currentItem = currentItem.getNext()) {
-            if (currentItem.equals(dataItem)) {
+            if (Objects.equals(currentItem.getData(), data)) {
                 previousItem.setNext(currentItem.getNext());
                 count--;
 
@@ -136,7 +140,7 @@ public class SinglyLinkedList<T> {
     }
 
     public T removeFirst() {
-        checkListToEmpty();
+        checkListIsEmpty();
 
         T removedData = head.getData();
 
@@ -147,21 +151,23 @@ public class SinglyLinkedList<T> {
     }
 
     public void reverse() {
-        if (count > 1) {
-            ListItem<T> previousItem = null;
-            ListItem<T> currentItem = head;
-            ListItem<T> nextItem = head.getNext();
-
-            while (nextItem != null) {
-                currentItem.setNext(previousItem);
-                previousItem = currentItem;
-                currentItem = nextItem;
-                nextItem = currentItem.getNext();
-            }
-
-            currentItem.setNext(previousItem);
-            head = currentItem;
+        if (count < 2) {
+            return;
         }
+
+        ListItem<T> previousItem = null;
+        ListItem<T> currentItem = head;
+        ListItem<T> nextItem = head.getNext();
+
+        while (nextItem != null) {
+            currentItem.setNext(previousItem);
+            previousItem = currentItem;
+            currentItem = nextItem;
+            nextItem = currentItem.getNext();
+        }
+
+        currentItem.setNext(previousItem);
+        head = currentItem;
     }
 
     @Override
