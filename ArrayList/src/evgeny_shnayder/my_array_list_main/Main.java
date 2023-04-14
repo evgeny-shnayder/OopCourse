@@ -1,6 +1,6 @@
-package evgeny_shnayder.array_list_main;
+package evgeny_shnayder.my_array_list_main;
 
-import evgeny_shnayder.array_list.MyArrayList;
+import evgeny_shnayder.my_array_list.MyArrayList;
 
 import java.util.ArrayList;
 import java.util.Arrays;

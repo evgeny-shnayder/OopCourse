@@ -1,4 +1,4 @@
-package evgeny_shnayder.array_list;
+package evgeny_shnayder.my_array_list;
 
 import java.util.*;
 
