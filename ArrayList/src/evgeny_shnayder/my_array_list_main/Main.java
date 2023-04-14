@@ -63,6 +63,7 @@ public class Main {
         System.out.println("Размер списка: " + list.getSize());
 
         MyArrayList<String> list2 = new MyArrayList<>();
+
         list2.add("true");
         list2.add("false");
         list2.add("null");
@@ -70,11 +71,6 @@ public class Main {
         System.out.println("Список: " + list2);
         System.out.println("Список содержит элемент: " + list2.contains("null"));
         System.out.println("Размер списка: " + list2.getSize());
-
-
-
-//        System.out.println(list1.add(25));
-//        list1.add(0,null);
         System.out.println(list1.add(15));
         list1.add(4, 5);
         System.out.println(list1);
@@ -87,7 +83,6 @@ public class Main {
         System.out.println("Список: " + list1);
 
         System.out.println("Массив на основе списка: " + Arrays.toString(list1.toArray(ar)));
-
         System.out.println("Исходный массив: " + Arrays.toString(ar));
     }
 }
