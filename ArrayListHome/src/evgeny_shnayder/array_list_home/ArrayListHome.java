@@ -13,7 +13,13 @@ public class ArrayListHome {
         System.out.println("Введите имя файла:");
         String fileName = scanner.nextLine();
 
-        System.out.println("Строки из файла: " + getFileLines(fileName));
+        try {
+            System.out.println("Строки из файла: " + getFileLines(fileName));
+        } catch (FileNotFoundException e) {
+            System.out.println("Файл с именем " + fileName + " не найден.");
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
 
         ArrayList<Integer> list = new ArrayList<>(Arrays.asList(5, 48, 2, 4, 81, 28, 81, 4, 4, 5, 4));
 
@@ -25,11 +31,9 @@ public class ArrayListHome {
         System.out.println("Список без повторов: " + getListWithoutRepeats(list));
     }
 
-    public static ArrayList<String> getFileLines(String fileName) {
+    public static ArrayList<String> getFileLines(String fileName) throws IOException {
         try (BufferedReader bufferedReader = new BufferedReader(new FileReader(fileName))) {
             return bufferedReader.lines().collect(Collectors.toCollection(ArrayList::new));
-        } catch (IOException e) {
-            throw new RuntimeException(e.getMessage());
         }
     }
 
