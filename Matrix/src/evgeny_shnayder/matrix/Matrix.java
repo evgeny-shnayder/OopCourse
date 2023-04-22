@@ -45,8 +45,6 @@ public class Matrix {
     }
 
     public Matrix(Vector[] vectors) {
-        checkRowsCount(vectors.length);
-
         int columnsCount = vectors[0].getSize();
 
         for (Vector row : vectors) {
@@ -87,11 +85,12 @@ public class Matrix {
 
     private void checkIndex(int index) {
         if (index < 0 || index >= rows.length) {
-            throw new IndexOutOfBoundsException("Индекс " + index + " должен иметь значение от min 0 до max " + rows.length + ".");
+            throw new IndexOutOfBoundsException("Индекс " + index + " должен иметь значение от min 0 до max " + rows.length
+                    + " включительно.");
         }
     }
 
-    private void checkEqualitySize(Matrix matrix) {
+    private void checkSizesEquality(Matrix matrix) {
         if (rows.length != matrix.rows.length || getColumnsCount() != matrix.getColumnsCount()) {
             throw new IllegalArgumentException("Размер матрицы " + rows.length + "x" + getColumnsCount() + " не совпадает с " +
                     "размером матрицы " + matrix.rows.length + "x" + matrix.getColumnsCount() + ".");
@@ -119,7 +118,8 @@ public class Matrix {
 
     public Vector getColumn(int index) {
         if (index < 0 || index >= getColumnsCount()) {
-            throw new IndexOutOfBoundsException("Индекс " + index + " должен иметь значение от min 0 до max " + getRowsCount() + ".");
+            throw new IndexOutOfBoundsException("Индекс " + index + " должен иметь значение от min 0 до max " + getColumnsCount()
+                    + " включительно.");
         }
 
         double[] array = new double[rows.length];
@@ -163,7 +163,7 @@ public class Matrix {
     }
 
     public void add(Matrix matrix) {
-        checkEqualitySize(matrix);
+        checkSizesEquality(matrix);
 
         for (int i = 0; i < rows.length; i++) {
             rows[i].add(matrix.rows[i]);
@@ -171,7 +171,7 @@ public class Matrix {
     }
 
     public void subtract(Matrix matrix) {
-        checkEqualitySize(matrix);
+        checkSizesEquality(matrix);
 
         for (int i = 0; i < rows.length; i++) {
             rows[i].subtract(matrix.rows[i]);
@@ -190,7 +190,6 @@ public class Matrix {
             vectors[i] = new Vector(rows[i]);
         }
 
-        double determinant = 1;
         double epsilon = 1e-10;
 
         for (int i = 0; i < vectors.length; i++) {
@@ -202,7 +201,7 @@ public class Matrix {
                 }
             }
 
-            if (Math.abs(vectors[i].getComponent(i) - 0) > epsilon) {
+            if (Math.abs(vectors[i].getComponent(i)) > epsilon) {
                 for (int j = i + 1; j < vectors.length; j++) {
                     double zeroCoefficient = vectors[j].getComponent(i) / vectors[i].getComponent(i);
 
@@ -213,6 +212,8 @@ public class Matrix {
                 }
             }
         }
+
+        double determinant = 1;
 
         for (int i = 0; i < vectors.length; i++) {
             determinant *= vectors[i].getComponent(i);
@@ -238,7 +239,7 @@ public class Matrix {
     }
 
     public static Matrix getSum(Matrix matrix1, Matrix matrix2) {
-        matrix1.checkEqualitySize(matrix2);
+        matrix1.checkSizesEquality(matrix2);
 
         Matrix resultMatrix = new Matrix(matrix1);
         resultMatrix.add(matrix2);
@@ -247,7 +248,7 @@ public class Matrix {
     }
 
     public static Matrix getDifference(Matrix matrix1, Matrix matrix2) {
-        matrix1.checkEqualitySize(matrix2);
+        matrix1.checkSizesEquality(matrix2);
 
         Matrix resultMatrix = new Matrix(matrix1);
         resultMatrix.subtract(matrix2);
