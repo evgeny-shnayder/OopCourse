@@ -10,6 +10,7 @@ public class ArrayList<E> implements List<E> {
     private int modCount;
 
     public ArrayList() {
+        //noinspection unchecked
         elements = (E[]) new Object[CAPACITY];
     }
 
@@ -18,6 +19,7 @@ public class ArrayList<E> implements List<E> {
             throw new IllegalArgumentException("Вместимость не должна быть меньше нуля");
         }
 
+        //noinspection unchecked
         elements = (E[]) new Object[initialCapacity];
     }
 
@@ -108,11 +110,12 @@ public class ArrayList<E> implements List<E> {
     @Override
     public <T> T[] toArray(T[] array) {
         if (size >= array.length) {
-
+            //noinspection unchecked
             return (T[]) Arrays.copyOf(elements, size, array.getClass());
         }
 
-        System.arraycopy(elements, 0, array, 0, size);
+        //noinspection SuspiciousSystemArraycopy
+        System.arraycopy(Arrays.copyOf(elements, elements.length, array.getClass()), 0, array, 0, size);
         array[size] = null;
 
         return array;
@@ -310,6 +313,7 @@ public class ArrayList<E> implements List<E> {
 
     @Override
     public List<E> subList(int i, int i1) {
+        //noinspection DataFlowIssue
         return null;
     }
 
