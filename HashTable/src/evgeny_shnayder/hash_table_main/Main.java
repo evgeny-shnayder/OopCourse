@@ -83,7 +83,7 @@ public class Main {
         Iterator<Integer> iterator = table1.iterator();
 
         while (iterator.hasNext()) {
-                    System.out.println(iterator.next());
+            System.out.println(iterator.next());
         }
 
         Person person1 = new Person("Petr", 18);
