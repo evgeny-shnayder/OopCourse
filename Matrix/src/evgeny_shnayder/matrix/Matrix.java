@@ -2,6 +2,8 @@ package evgeny_shnayder.matrix;
 
 import shnayder_evgeny.vector.Vector;
 
+import java.util.Objects;
+
 public class Matrix {
     private Vector[] rows;
 
@@ -45,21 +47,28 @@ public class Matrix {
     }
 
     public Matrix(Vector[] vectors) {
-        int columnsCount = vectors[0].getSize();
-
-        for (Vector row : vectors) {
-            if (columnsCount < row.getSize()) {
-                columnsCount = row.getSize();
-            }
+        if (Objects.equals(vectors, null)) {
+            throw new IllegalArgumentException("Пустой массив векторов. Создание матрицы не возможно.");
         }
 
-        checkColumnsCount(columnsCount);
+        int columnsCount = 0;
+
+        for (Vector row : vectors) {
+            if (!Objects.equals(row, null)) {
+                if (columnsCount < row.getSize()) {
+                    columnsCount = row.getSize();
+                }
+            }
+        }
 
         rows = new Vector[vectors.length];
 
         for (int i = 0; i < rows.length; i++) {
             rows[i] = new Vector(columnsCount);
-            rows[i].add(vectors[i]);
+
+            if (!Objects.equals(vectors[i], null)) {
+                rows[i].add(vectors[i]);
+            }
         }
     }
 
@@ -85,7 +94,7 @@ public class Matrix {
 
     private void checkIndex(int index) {
         if (index < 0 || index >= rows.length) {
-            throw new IndexOutOfBoundsException("Индекс " + index + " должен иметь значение от min 0 до max " + rows.length
+            throw new IndexOutOfBoundsException("Индекс " + index + " должен иметь значение от 0 до " + (rows.length - 1)
                     + " включительно.");
         }
     }
@@ -118,7 +127,7 @@ public class Matrix {
 
     public Vector getColumn(int index) {
         if (index < 0 || index >= getColumnsCount()) {
-            throw new IndexOutOfBoundsException("Индекс " + index + " должен иметь значение от min 0 до max " + getColumnsCount()
+            throw new IndexOutOfBoundsException("Индекс " + index + " должен иметь значение от 0 до " + (getColumnsCount() - 1)
                     + " включительно.");
         }
 
@@ -224,6 +233,10 @@ public class Matrix {
 
     @Override
     public String toString() {
+        if (rows == null) {
+            return "{}";
+        }
+
         StringBuilder stringBuilder = new StringBuilder();
 
         stringBuilder.append('{');
