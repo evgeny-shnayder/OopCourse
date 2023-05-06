@@ -37,7 +37,7 @@ public class Main {
         list1.remove(0);
         System.out.println("Список 1: " + list1);
 
-        Integer[] array2 = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13};
+        Integer[] array2 = {1, 2, 3, 4, 5, 6, 7, 8, 9};
         java.util.ArrayList<Integer> list2 = new java.util.ArrayList<>(Arrays.asList(5, 45, 28, 14));
 
         list1.addAll(list2);

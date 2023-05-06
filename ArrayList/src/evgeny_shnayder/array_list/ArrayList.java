@@ -4,19 +4,20 @@ import java.util.*;
 
 
 public class ArrayList<E> implements List<E> {
-    private final int CAPACITY = 10;
+    private static final int DEFAULT_CAPACITY = 10;
+
     private E[] elements;
     private int size;
     private int modCount;
 
     public ArrayList() {
         //noinspection unchecked
-        elements = (E[]) new Object[CAPACITY];
+        elements = (E[]) new Object[DEFAULT_CAPACITY];
     }
 
     public ArrayList(int initialCapacity) {
         if (initialCapacity < 0) {
-            throw new IllegalArgumentException("Вместимость не должна быть меньше нуля");
+            throw new IllegalArgumentException("Вместимость " + initialCapacity + " не должна быть меньше нуля");
         }
 
         //noinspection unchecked
@@ -29,7 +30,8 @@ public class ArrayList<E> implements List<E> {
 
     private void increaseCapacity() {
         if (elements.length == 0) {
-            elements = Arrays.copyOf(elements, CAPACITY);
+            //noinspection unchecked
+            elements = (E[]) new Object[DEFAULT_CAPACITY];
             return;
         }
 
@@ -71,12 +73,8 @@ public class ArrayList<E> implements List<E> {
     }
 
     private class MyListIterator implements Iterator<E> {
+        private final int expectedModCount = modCount;
         private int currentIndex = -1;
-        private final int expectedModCount;
-
-        MyListIterator() {
-            expectedModCount = modCount;
-        }
 
         public boolean hasNext() {
             return currentIndex + 1 < size;
@@ -109,14 +107,17 @@ public class ArrayList<E> implements List<E> {
 
     @Override
     public <T> T[] toArray(T[] array) {
-        if (size >= array.length) {
+        if (size > array.length) {
             //noinspection unchecked
             return (T[]) Arrays.copyOf(elements, size, array.getClass());
         }
 
         //noinspection SuspiciousSystemArraycopy
-        System.arraycopy(Arrays.copyOf(elements, elements.length, array.getClass()), 0, array, 0, size);
-        array[size] = null;
+        System.arraycopy(elements, 0, array, 0, size);
+
+        if (size < array.length) {
+            array[size] = null;
+        }
 
         return array;
     }
@@ -124,19 +125,15 @@ public class ArrayList<E> implements List<E> {
     public boolean add(E element) {
         add(size, element);
 
-        if (size == elements.length) {
-            increaseCapacity();
-        }
-
         return true;
     }
 
     @Override
     public boolean remove(Object object) {
-        int removedElementIndex = indexOf(object);
+        int index = indexOf(object);
 
-        if (removedElementIndex != -1) {
-            remove(removedElementIndex);
+        if (index != -1) {
+            remove(index);
 
             return true;
         }
@@ -157,9 +154,7 @@ public class ArrayList<E> implements List<E> {
 
     @Override
     public boolean addAll(Collection<? extends E> collection) {
-        addAll(size, collection);
-
-        return true;
+        return addAll(size, collection);
     }
 
     @Override
@@ -172,16 +167,17 @@ public class ArrayList<E> implements List<E> {
 
         int minCapacity = size + collection.size();
 
-        if (minCapacity > elements.length) {
-            ensureCapacity(minCapacity);
+        ensureCapacity(minCapacity);
+
+        if (index != size) {
+            System.arraycopy(elements, index, elements, index + collection.size(), size - index);
         }
 
-        int i = index;
+        //noinspection SuspiciousSystemArraycopy
+        System.arraycopy(collection.toArray(), 0, elements, index, collection.size());
 
-        for (E element : collection) {
-            add(i, element);
-            i++;
-        }
+        size += collection.size();
+        modCount++;
 
         return true;
     }
@@ -225,9 +221,7 @@ public class ArrayList<E> implements List<E> {
             return;
         }
 
-        for (int i = 0; i < size; i++) {
-            elements[i] = null;
-        }
+        Arrays.fill(elements, null);
 
         size = 0;
         modCount++;
@@ -331,9 +325,7 @@ public class ArrayList<E> implements List<E> {
             stringBuilder.append(elements[i]).append(", ");
         }
 
-        if (stringBuilder.length() > 0) {
-            stringBuilder.delete(stringBuilder.length() - 2, stringBuilder.length());
-        }
+        stringBuilder.delete(stringBuilder.length() - 2, stringBuilder.length());
 
         stringBuilder.append(']');
 
