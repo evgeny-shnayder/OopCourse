@@ -2,8 +2,6 @@ package evgeny_shnayder.matrix;
 
 import shnayder_evgeny.vector.Vector;
 
-import java.util.Objects;
-
 public class Matrix {
     private Vector[] rows;
 
@@ -47,17 +45,13 @@ public class Matrix {
     }
 
     public Matrix(Vector[] vectors) {
-        if (Objects.equals(vectors, null)) {
-            throw new IllegalArgumentException("Пустой массив векторов. Создание матрицы не возможно.");
-        }
+        checkRowsCount(vectors.length);
 
         int columnsCount = 0;
 
         for (Vector row : vectors) {
-            if (!Objects.equals(row, null)) {
-                if (columnsCount < row.getSize()) {
-                    columnsCount = row.getSize();
-                }
+            if (columnsCount < row.getSize()) {
+                columnsCount = row.getSize();
             }
         }
 
@@ -65,10 +59,7 @@ public class Matrix {
 
         for (int i = 0; i < rows.length; i++) {
             rows[i] = new Vector(columnsCount);
-
-            if (!Objects.equals(vectors[i], null)) {
-                rows[i].add(vectors[i]);
-            }
+            rows[i].add(vectors[i]);
         }
     }
 
@@ -233,10 +224,6 @@ public class Matrix {
 
     @Override
     public String toString() {
-        if (rows == null) {
-            return "{}";
-        }
-
         StringBuilder stringBuilder = new StringBuilder();
 
         stringBuilder.append('{');
