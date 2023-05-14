@@ -2,7 +2,6 @@ package evgeny_shnayder.array_list;
 
 import java.util.*;
 
-
 public class ArrayList<E> implements List<E> {
     private static final int DEFAULT_CAPACITY = 10;
 
@@ -22,10 +21,6 @@ public class ArrayList<E> implements List<E> {
 
         //noinspection unchecked
         elements = (E[]) new Object[initialCapacity];
-    }
-
-    public int getSize() {
-        return size;
     }
 
     private void increaseCapacity() {
@@ -72,7 +67,7 @@ public class ArrayList<E> implements List<E> {
         return indexOf(object) != -1;
     }
 
-    private class MyListIterator implements Iterator<E> {
+    private class ArrayListIterator implements Iterator<E> {
         private final int expectedModCount = modCount;
         private int currentIndex = -1;
 
@@ -97,7 +92,7 @@ public class ArrayList<E> implements List<E> {
 
     @Override
     public Iterator<E> iterator() {
-        return new MyListIterator();
+        return new ArrayListIterator();
     }
 
     @Override
@@ -169,14 +164,16 @@ public class ArrayList<E> implements List<E> {
 
         ensureCapacity(minCapacity);
 
-        if (index != size) {
-            System.arraycopy(elements, index, elements, index + collection.size(), size - index);
-        }
-
-        //noinspection SuspiciousSystemArraycopy
-        System.arraycopy(collection.toArray(), 0, elements, index, collection.size());
+        System.arraycopy(elements, index, elements, index + collection.size(), size - index);
 
         size += collection.size();
+        int i = index;
+
+        for (E element : collection) {
+            set(i, element);
+            i++;
+        }
+
         modCount++;
 
         return true;
@@ -221,7 +218,7 @@ public class ArrayList<E> implements List<E> {
             return;
         }
 
-        Arrays.fill(elements, null);
+        Arrays.fill(elements, 0, size, null);
 
         size = 0;
         modCount++;

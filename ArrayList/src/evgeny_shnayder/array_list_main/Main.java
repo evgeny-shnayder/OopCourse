@@ -31,7 +31,7 @@ public class Main {
 
         list1.add(156);
         System.out.println("Список 1: " + list1);
-        System.out.println("Размер списка 1: " + list1.getSize());
+        System.out.println("Размер списка 1: " + list1.size());
         System.out.println("Массив: " + Arrays.toString(array1));
 
         list1.remove(0);
@@ -46,14 +46,14 @@ public class Main {
         System.out.println("Массив на основе списка 1: " + Arrays.toString(list1.toArray(array2)));
         System.out.println("Исходный массив: " + Arrays.toString(array2));
         System.out.println("Список 1 содержит элемент: " + list1.contains(null));
-        System.out.println("Размер списка 1: " + list1.getSize());
+        System.out.println("Размер списка 1: " + list1.size());
 
         list1.addAll(2, list2);
         System.out.println("Список 1 после добавления списка 2: " + list1);
 
         list1.add(0, 125);
         System.out.println("Список 1: " + list1);
-        System.out.println("Размер списка 1: " + list1.getSize());
+        System.out.println("Размер списка 1: " + list1.size());
 
         java.util.ArrayList<Integer> list4 = new java.util.ArrayList<>(Arrays.asList(4, 5, 25));
         java.util.ArrayList<Integer> list5 = new java.util.ArrayList<>(Arrays.asList(15, 156, 45));
@@ -63,7 +63,7 @@ public class Main {
         System.out.println("Список 1 содержит список 5: " + list1.containsAll(list5));
         System.out.println(list1.retainAll(list5));
         System.out.println("Список 1 после удаления списка 5: " + list1);
-        System.out.println("Размер списка: " + list1.getSize());
+        System.out.println("Размер списка: " + list1.size());
 
         ArrayList<String> list3 = new ArrayList<>();
 
@@ -73,7 +73,7 @@ public class Main {
 
         System.out.println("Список 3: " + list3);
         System.out.println("Список содержит элемент: " + list3.contains("null"));
-        System.out.println("Размер списка 2: " + list3.getSize());
+        System.out.println("Размер списка 2: " + list3.size());
         System.out.println(list2.add(15));
         list2.add(4, 5);
         System.out.println("Список 2: " + list2);
@@ -81,11 +81,11 @@ public class Main {
 
         java.util.ArrayList<Integer> list6 = new java.util.ArrayList<>(Arrays.asList(12, 46));
 
-        System.out.println("Список: " + list2);
+        System.out.println("Список 2: " + list2);
         System.out.println(list2.retainAll(list6));
-        System.out.println("Список: " + list2);
+        System.out.println("Список 2: " + list2);
 
-        System.out.println("Массив на основе списка: " + Arrays.toString(list2.toArray(array2)));
+        System.out.println("Массив на основе списка 2: " + Arrays.toString(list2.toArray(array2)));
         System.out.println("Исходный массив: " + Arrays.toString(array2));
     }
 }
