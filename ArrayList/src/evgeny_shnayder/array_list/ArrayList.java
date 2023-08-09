@@ -154,11 +154,11 @@ public class ArrayList<E> implements List<E> {
 
     @Override
     public boolean addAll(int index, Collection<? extends E> collection) {
+        checkIndexForAdd(index);
+
         if (collection.isEmpty()) {
             return false;
         }
-
-        checkIndexForAdd(index);
 
         int minCapacity = size + collection.size();
 
@@ -170,7 +170,7 @@ public class ArrayList<E> implements List<E> {
         int i = index;
 
         for (E element : collection) {
-            set(i, element);
+            elements[i] = element;
             i++;
         }
 
