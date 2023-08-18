@@ -6,6 +6,7 @@ import java.util.Scanner;
 
 public class CSVtable {
     private ArrayList<ArrayList<String>> table;
+
     public ArrayList<ArrayList<String>> getTable() {
         return table;
     }
@@ -126,6 +127,11 @@ public class CSVtable {
                     table.get(i + 1).remove(0);
                     table.get(i).addAll(table.get(i + 1));
                     table.remove(i + 1);
+                }
+
+                if (table.get(i).get(j).contains("\"")) {
+                    detail = table.get(i).get(j).replaceFirst("\"", "");
+                    table.get(i).set(j, detail);
                 }
 
                 if (table.get(i).get(j).contains("\"")) {
