@@ -38,10 +38,10 @@ public class Main {
         List<Integer> list2 = new ArrayList<>();
 
         System.out.println(table1.addAll(list1));
-        System.out.println("Таблица 1 после дабавления списка 1: " + table1);
+        System.out.println("Таблица 1 после добавления списка 1: " + table1);
         System.out.println("Количество элементов таблицы 1: " + table1.size());
         System.out.println(table1.addAll(list2));
-        System.out.println("Таблица 1 после дабавления списка 2: " + table1);
+        System.out.println("Таблица 1 после добавления списка 2: " + table1);
         System.out.println("Размер таблицы 1: " + table1.size());
         System.out.println("Массив из списка 1: " + Arrays.toString(table1.toArray()));
 
@@ -94,10 +94,8 @@ public class Main {
         table1.add(null);
         System.out.println("Таблица 1: " + table1);
 
-        Iterator<Integer> iterator = table1.iterator();
-
-        while (iterator.hasNext()) {
-            System.out.println(iterator.next());
+        for (Integer tableElement : table1) {
+            System.out.println(tableElement);
         }
 
         System.out.println("Размер таблица 1: " + table1.size());

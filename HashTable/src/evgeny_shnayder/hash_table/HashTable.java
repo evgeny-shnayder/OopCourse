@@ -263,6 +263,10 @@ public class HashTable<E> implements Collection<E> {
 
     @Override
     public void clear() {
+        if (size == 0) {
+            return;
+        }
+
         Arrays.fill(lists, null);
 
         size = 0;
