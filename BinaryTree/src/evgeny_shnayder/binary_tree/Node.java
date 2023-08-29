@@ -1,20 +1,11 @@
 package evgeny_shnayder.binary_tree;
 
-public class Node<T> {
+class Node<T> {
     private Node<T> left;
     private Node<T> right;
     private T data;
 
-    public Node() {
-    }
-
-    public Node(T data) {
-        this.data = data;
-    }
-
-    public Node(Node<T> left, Node<T> right, T data) {
-        this.left = left;
-        this.right = right;
+    protected Node(T data) {
         this.data = data;
     }
 
@@ -40,9 +31,5 @@ public class Node<T> {
 
     public void setRight(Node<T> right) {
         this.right = right;
-    }
-
-    public String toString() {
-        return data.toString();
     }
 }
