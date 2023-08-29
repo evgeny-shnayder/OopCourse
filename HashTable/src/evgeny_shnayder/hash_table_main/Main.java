@@ -4,7 +4,6 @@ import evgeny_shnayder.hash_table.HashTable;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Iterator;
 import java.util.List;
 
 public class Main {
@@ -54,12 +53,11 @@ public class Main {
 
         System.out.println(table1.containsAll(list));
         System.out.println("Таблица 1: " + table1);
-        System.out.println("Размер таблицы 1: " + table1.size());
+        System.out.println("Размер таблицы 111: " + table1.size());
         System.out.println(table1.removeAll(list));
         System.out.println("Размер таблицы 1: " + table1.size());
         System.out.println("Таблица 1: " + table1);
         table1.clear();
-        System.out.println("Размер таблицы 1: " + table1.size());
         System.out.println("Таблица 1: " + table1);
 
         table1.add(28);
@@ -92,6 +90,10 @@ public class Main {
         table1.add(9);
         table1.add(10);
         table1.add(null);
+
+        System.out.println("Размер таблица 1: " + table1.size());
+
+        System.out.println(table1.contains(15));
         System.out.println("Таблица 1: " + table1);
 
         for (Integer tableElement : table1) {
@@ -99,5 +101,9 @@ public class Main {
         }
 
         System.out.println("Размер таблица 1: " + table1.size());
+
+        HashTable<Integer> table3 = new HashTable<>();
+
+        System.out.println(table3.removeAll(list2));
     }
 }
