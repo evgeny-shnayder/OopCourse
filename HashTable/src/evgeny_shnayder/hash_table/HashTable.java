@@ -5,7 +5,7 @@ import java.util.*;
 public class HashTable<E> implements Collection<E> {
     private static final int DEFAULT_CAPACITY = 10;
 
-    private List<E>[] lists;
+    private final List<E>[] lists;
     private int size;
     private int modCount;
 
@@ -23,15 +23,19 @@ public class HashTable<E> implements Collection<E> {
         lists = (List<E>[]) new ArrayList[capacity];
     }
 
-    public HashTable(Collection<? extends E> collection ) {
+    public HashTable(Collection<? extends E> collection) {
         //noinspection unchecked
         lists = (List<E>[]) new ArrayList[collection.size()];
 
         for (E element : collection) {
             int index = getIndex(element);
 
-            lists[index] = new ArrayList<>();
+            if (lists[index] == null) {
+                lists[index] = new ArrayList<>();
+            }
+
             lists[index].add(element);
+            size++;
         }
     }
 
@@ -57,17 +61,12 @@ public class HashTable<E> implements Collection<E> {
     public boolean contains(Object object) {
         int index = getIndex(object);
 
-        if (lists[index] == null) {
-            return false;
-        }
-
-        return lists[index].contains(object);
+        return lists[index] != null && lists[index].contains(object);
     }
 
     private class HashTableIterator implements Iterator<E> {
         private int visitedElementsCount;
         private int currentArrayIndex;
-
         private int currentListIndex = -1;
 
         private final int expectedModCount;
@@ -142,7 +141,7 @@ public class HashTable<E> implements Collection<E> {
             return (T[]) Arrays.copyOf(toArray(), size, array.getClass());
         }
 
-//        noinspection SuspiciousSystemArraycopy
+        //noinspection SuspiciousSystemArraycopy
         System.arraycopy(toArray(), 0, array, 0, size);
 
         if (array.length > size) {
@@ -218,6 +217,7 @@ public class HashTable<E> implements Collection<E> {
 
                 if (list.removeAll(collection)) {
                     isRemoved = true;
+
                     size -= oldSize - list.size();
                     modCount++;
                 }

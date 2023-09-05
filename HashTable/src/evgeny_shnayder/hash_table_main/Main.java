@@ -102,8 +102,16 @@ public class Main {
 
         System.out.println("Размер таблица 1: " + table1.size());
 
-        HashTable<Integer> table3 = new HashTable<>();
+        HashTable<Integer> table4 = new HashTable<>();
 
-        System.out.println(table3.removeAll(list2));
+        table4.add(28);
+        table4.add(15);
+
+        HashTable<Integer> table3 = new HashTable<>(table4);
+
+        table3.add(6);
+
+        System.out.println(table3.size());
+        System.out.println(table3);
     }
 }
