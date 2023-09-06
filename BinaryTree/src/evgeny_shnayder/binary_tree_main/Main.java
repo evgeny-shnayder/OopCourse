@@ -27,7 +27,7 @@ public class Main {
 
         System.out.println("Дерево содержит элемент: " + tree.contains(null));
         System.out.println("Размер дерева: " + tree.getCount());
-        System.out.println(tree.remove(238));
+        System.out.println(tree.remove(123));
         System.out.println("Размер дерева: " + tree.getCount());
 
         Consumer<Integer> printer = System.out::println;

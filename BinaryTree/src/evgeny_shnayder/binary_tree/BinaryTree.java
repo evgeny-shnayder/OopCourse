@@ -183,11 +183,7 @@ public class BinaryTree<E> {
                     minLeftNode = minLeftNode.getLeft();
                 }
 
-                if (minLeftNode.getRight() == null) {
-                    minLeftNodeParent.setLeft(null);
-                } else {
-                    minLeftNodeParent.setLeft(minLeftNode.getRight());
-                }
+                minLeftNodeParent.setLeft(minLeftNode.getRight());
             }
 
             if (parentNode == null) {
