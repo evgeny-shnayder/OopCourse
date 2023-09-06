@@ -1,35 +1,35 @@
 package evgeny_shnayder.binary_tree;
 
-class Node<T> {
-    private Node<T> left;
-    private Node<T> right;
-    private T data;
+class Node<E> {
+    private Node<E> left;
+    private Node<E> right;
+    private E data;
 
-    protected Node(T data) {
+    protected Node(E data) {
         this.data = data;
     }
 
-    public T getData() {
+    public E getData() {
         return data;
     }
 
-    public void setData(T data) {
+    public void setData(E data) {
         this.data = data;
     }
 
-    public Node<T> getLeft() {
+    public Node<E> getLeft() {
         return left;
     }
 
-    public void setLeft(Node<T> left) {
+    public void setLeft(Node<E> left) {
         this.left = left;
     }
 
-    public Node<T> getRight() {
+    public Node<E> getRight() {
         return right;
     }
 
-    public void setRight(Node<T> right) {
+    public void setRight(Node<E> right) {
         this.right = right;
     }
 }

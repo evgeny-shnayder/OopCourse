@@ -26,12 +26,12 @@ public class Main {
 
         System.out.println("Дерево содержит элемент: " + tree.contains(null));
         System.out.println("Размер дерева: " + tree.getCount());
-        System.out.println(tree.remove(255));
+        System.out.println(tree.remove(238));
         System.out.println("Размер дерева: " + tree.getCount());
 
         Consumer<Integer> printer = System.out::println;
 
-        tree.depthRecursiveTraverse(printer);
+        tree.traverseDepthRecursive(printer);
 
         BinaryTree<Integer> tree1 = new BinaryTree<>();
 
@@ -44,10 +44,14 @@ public class Main {
         tree1.add(13);
 
         System.out.println("Размер дерева: " + tree1.getCount());
-        System.out.println(tree1.remove(25));
+        System.out.println(tree1.remove(12));
         System.out.println("Размер дерева: " + tree1.getCount());
 
-        tree1.widthTraverse(printer);
-        tree1.depthTraverse(printer);
+        tree1.traverseWidth(printer);
+        tree1.traverseDepth(printer);
+
+        BinaryTree<Integer> tree2 = new BinaryTree<>();
+
+        tree2.traverseWidth(printer);
     }
 }

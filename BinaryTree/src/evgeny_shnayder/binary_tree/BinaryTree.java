@@ -5,10 +5,11 @@ import java.util.function.Consumer;
 
 public class BinaryTree<E> {
     private Node<E> rootNode;
-    private Comparator<? super E> comparator;
+    private final Comparator<? super E> comparator;
     private int count;
 
     public BinaryTree() {
+        comparator = null;
     }
 
     public BinaryTree(Comparator<? super E> comparator) {
@@ -19,25 +20,25 @@ public class BinaryTree<E> {
         return count;
     }
 
-    private int getComparisonResult(E object1, E object2) {
-        if (object1 == null && object2 == null) {
+    private int compare(E data1, E data2) {
+        if (data1 == null && data2 == null) {
             return 0;
         }
 
-        if (object1 == null) {
+        if (data1 == null) {
             return -1;
         }
 
-        if (object2 == null) {
+        if (data2 == null) {
             return 1;
         }
 
         if (comparator != null) {
-            return comparator.compare(object1, object2);
+            return comparator.compare(data1, data2);
         }
 
-        @SuppressWarnings("unchecked") Comparable<? super E> comparable = (Comparable<? super E>) object1;
-        return comparable.compareTo(object2);
+        //noinspection unchecked
+        return ((Comparable<? super E>) data1).compareTo(data2);
     }
 
     public boolean add(E data) {
@@ -51,7 +52,7 @@ public class BinaryTree<E> {
         Node<E> currentNode = rootNode;
 
         while (currentNode != null) {
-            int comparisonResult = getComparisonResult(data, currentNode.getData());
+            int comparisonResult = compare(data, currentNode.getData());
 
             if (comparisonResult >= 0) {
                 if (currentNode.getRight() == null) {
@@ -62,9 +63,7 @@ public class BinaryTree<E> {
                 }
 
                 currentNode = currentNode.getRight();
-            }
-
-            if (comparisonResult < 0) {
+            } else {
                 if (currentNode.getLeft() == null) {
                     currentNode.setLeft(new Node<>(data));
                     count++;
@@ -83,7 +82,7 @@ public class BinaryTree<E> {
         Node<E> currentNode = rootNode;
 
         while (currentNode != null) {
-            int comparisonResult = getComparisonResult(data, currentNode.getData());
+            int comparisonResult = compare(data, currentNode.getData());
 
             if (comparisonResult == 0) {
                 return true;
@@ -91,15 +90,13 @@ public class BinaryTree<E> {
 
             if (comparisonResult > 0) {
                 if (currentNode.getRight() == null) {
-                    return false;
+                    break;
                 }
 
                 currentNode = currentNode.getRight();
-            }
-
-            if (comparisonResult < 0) {
+            } else {
                 if (currentNode.getLeft() == null) {
-                    return false;
+                    break;
                 }
 
                 currentNode = currentNode.getLeft();
@@ -118,8 +115,8 @@ public class BinaryTree<E> {
         Node<E> parentNode = null;
         boolean isLeft = false;
 
-        while (deletedNode != null) {
-            int comparisonResult = getComparisonResult(data, deletedNode.getData());
+        while (true) {
+            int comparisonResult = compare(data, deletedNode.getData());
 
             if (comparisonResult > 0) {
                 if (deletedNode.getRight() == null) {
@@ -129,9 +126,7 @@ public class BinaryTree<E> {
                 parentNode = deletedNode;
                 deletedNode = deletedNode.getRight();
                 isLeft = false;
-            }
-
-            if (comparisonResult < 0) {
+            } else if (comparisonResult < 0) {
                 if (deletedNode.getLeft() == null) {
                     return false;
                 }
@@ -139,172 +134,111 @@ public class BinaryTree<E> {
                 parentNode = deletedNode;
                 deletedNode = deletedNode.getLeft();
                 isLeft = true;
+            } else {
+                break;
+            }
+        }
+
+        if (deletedNode.getRight() == null && deletedNode.getLeft() == null) {
+            if (parentNode == null) {
+                rootNode = null;
+                count--;
+
+                return true;
             }
 
-            if (comparisonResult == 0) {
-                if (deletedNode.getLeft() == null && deletedNode.getRight() == null) {
-                    if (parentNode == null) {
-                        rootNode = null;
+            if (isLeft) {
+                parentNode.setLeft(null);
+            } else {
+                parentNode.setRight(null);
+            }
 
-                        count--;
+            count--;
+        } else if (deletedNode.getRight() == null || deletedNode.getLeft() == null) {
+            Node<E> deletedNodeChildren = deletedNode.getRight() != null ? deletedNode.getRight() : deletedNode.getLeft();
 
-                        return true;
-                    }
+            if (parentNode == null) {
+                rootNode = deletedNodeChildren;
+                count--;
 
-                    if (isLeft) {
-                        parentNode.setLeft(null);
-                    } else {
-                        parentNode.setRight(null);
-                    }
+                return true;
+            }
 
-                    count--;
+            if (isLeft) {
+                parentNode.setLeft(deletedNodeChildren);
+            } else {
+                parentNode.setRight(deletedNodeChildren);
+            }
 
-                    return true;
+            count--;
+        } else {
+            Node<E> minLeftNodeParent = deletedNode;
+            Node<E> minLeftNode = deletedNode.getRight();
+
+            if (minLeftNode.getLeft() == null) {
+                minLeftNodeParent.setRight(minLeftNode.getRight());
+            } else {
+                while (minLeftNode.getLeft() != null) {
+                    minLeftNodeParent = minLeftNode;
+                    minLeftNode = minLeftNode.getLeft();
                 }
 
-                if (deletedNode.getLeft() == null || deletedNode.getRight() == null) {
-                    if (deletedNode.getRight() != null) {
-                        if (parentNode == null) {
-                            rootNode.setData(rootNode.getRight().getData());
-                            rootNode.setRight(rootNode.getRight().getRight());
-
-                            count--;
-
-                            return true;
-                        }
-
-                        if (isLeft) {
-                            parentNode.setLeft(deletedNode.getRight());
-                        } else {
-                            parentNode.setRight(deletedNode.getRight());
-                        }
-
-                        count--;
-
-                        return true;
-                    }
-
-                    if (deletedNode.getLeft() != null) {
-                        if (parentNode == null) {
-                            rootNode.setData(rootNode.getLeft().getData());
-                            rootNode.setRight(rootNode.getLeft().getLeft());
-
-                            count--;
-
-                            return true;
-                        }
-
-                        if (isLeft) {
-                            parentNode.setLeft(deletedNode.getLeft());
-                        } else {
-                            parentNode.setRight(deletedNode.getLeft());
-                        }
-
-                        count--;
-
-                        return true;
-                    }
-                }
-
-                Node<E> minLeftNodeParent = deletedNode;
-                Node<E> minLeftNode = deletedNode.getRight();
-
-                if (minLeftNode.getLeft() == null && minLeftNode.getRight() == null) {
-                    if (parentNode == null) {
-                        rootNode.setRight(null);
-                        rootNode.setData(minLeftNode.getData());
-
-                        count--;
-
-                        return true;
-                    }
-
-                    if (isLeft) {
-                        parentNode.setLeft(minLeftNode);
-                    } else {
-                        parentNode.setRight(minLeftNode);
-                    }
-
-                    minLeftNode.setLeft(deletedNode.getLeft());
-                    minLeftNode.setRight(null);
-
-                    count--;
-
-                    return true;
-                } else if (minLeftNode.getLeft() == null && minLeftNode.getRight() != null) {
-                    minLeftNodeParent.setRight(minLeftNode.getRight());
-
-                    if (parentNode == null) {
-                        rootNode.setData(minLeftNode.getData());
-                        count--;
-
-                        return true;
-                    }
-
-                    parentNode.setRight(minLeftNode);
-                    minLeftNode.setLeft(deletedNode.getLeft());
-
-                    count--;
-
-                    return true;
+                if (minLeftNode.getRight() == null) {
+                    minLeftNodeParent.setLeft(null);
                 } else {
-                    while (minLeftNode.getLeft() != null) {
-                        minLeftNodeParent = minLeftNode;
-                        minLeftNode = minLeftNode.getLeft();
-                    }
-
-                    if (minLeftNode.getRight() != null) {
-                        minLeftNodeParent.setLeft(minLeftNode.getRight());
-                    } else {
-                        minLeftNodeParent.setLeft(null);
-                    }
-
-                    if (parentNode == null) {
-                        rootNode.setData(minLeftNode.getData());
-                        minLeftNode.setRight(null);
-                        minLeftNode.setLeft(null);
-
-                        count--;
-
-                        return true;
-                    }
-
-                    minLeftNode.setLeft(deletedNode.getLeft());
-                    minLeftNode.setRight(deletedNode.getRight());
-
-                    if (isLeft) {
-                        parentNode.setLeft(minLeftNode);
-                    } else {
-                        parentNode.setRight(minLeftNode);
-                    }
-
-                    count--;
-
-                    return true;
+                    minLeftNodeParent.setLeft(minLeftNode.getRight());
                 }
             }
+
+            if (parentNode == null) {
+                minLeftNode.setRight(rootNode.getRight());
+                minLeftNode.setLeft(rootNode.getLeft());
+                rootNode = minLeftNode;
+                count--;
+
+                return true;
+            }
+
+            minLeftNode.setLeft(deletedNode.getLeft());
+            minLeftNode.setRight(deletedNode.getRight());
+
+            if (isLeft) {
+                parentNode.setLeft(minLeftNode);
+            } else {
+                parentNode.setRight(minLeftNode);
+            }
+
+            count--;
         }
 
         return true;
     }
 
-    private void recursiveTraverse(Node<E> node, Consumer<E> consumer) {
+    private void traverseDepthRecursive(Node<E> node, Consumer<E> consumer) {
         consumer.accept(node.getData());
 
         if (node.getLeft() != null) {
-            recursiveTraverse(node.getLeft(), consumer);
+            traverseDepthRecursive(node.getLeft(), consumer);
         }
 
         if (node.getRight() != null) {
-            recursiveTraverse(node.getRight(), consumer);
+            traverseDepthRecursive(node.getRight(), consumer);
         }
     }
 
-    public void depthRecursiveTraverse(Consumer<E> consumer) {
-        recursiveTraverse(rootNode, consumer);
+    public void traverseDepthRecursive(Consumer<E> consumer) {
+        if (rootNode == null) {
+            return;
+        }
+
+        traverseDepthRecursive(rootNode, consumer);
     }
 
-    public void depthTraverse(Consumer<E> consumer) {
+    public void traverseDepth(Consumer<E> consumer) {
+        if (rootNode == null) {
+            return;
+        }
+
         ArrayList<Node<E>> stack = new ArrayList<>();
 
         stack.add(rootNode);
@@ -324,7 +258,11 @@ public class BinaryTree<E> {
         }
     }
 
-    public void widthTraverse(Consumer<E> consumer) {
+    public void traverseWidth(Consumer<E> consumer) {
+        if (rootNode == null) {
+            return;
+        }
+
         Queue<Node<E>> queue = new LinkedList<>();
 
         queue.add(rootNode);
