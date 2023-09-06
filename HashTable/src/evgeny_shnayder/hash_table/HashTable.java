@@ -25,7 +25,7 @@ public class HashTable<E> implements Collection<E> {
 
     public HashTable(Collection<? extends E> collection) {
         //noinspection unchecked
-        lists = (List<E>[]) new ArrayList[collection.size()];
+        lists = (List<E>[]) new ArrayList[DEFAULT_CAPACITY];
 
         for (E element : collection) {
             int index = getIndex(element);
@@ -217,7 +217,6 @@ public class HashTable<E> implements Collection<E> {
 
                 if (list.removeAll(collection)) {
                     isRemoved = true;
-
                     size -= oldSize - list.size();
                     modCount++;
                 }
