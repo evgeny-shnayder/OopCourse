@@ -35,8 +35,9 @@ public class HashTable<E> implements Collection<E> {
             }
 
             lists[index].add(element);
-            size++;
         }
+
+        size = collection.size();
     }
 
     @Override
