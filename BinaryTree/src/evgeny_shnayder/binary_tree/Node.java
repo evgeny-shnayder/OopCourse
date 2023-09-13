@@ -5,7 +5,7 @@ class Node<E> {
     private Node<E> right;
     private E data;
 
-    protected Node(E data) {
+    public Node(E data) {
         this.data = data;
     }
 

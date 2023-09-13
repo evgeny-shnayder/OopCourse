@@ -2,20 +2,37 @@ package evgeny_shnayder.binary_tree_main;
 
 import evgeny_shnayder.binary_tree.BinaryTree;
 
+import java.util.Comparator;
 import java.util.function.Consumer;
 
 public class Main {
     public static void main(String[] args) {
-        BinaryTree<Integer> tree = new BinaryTree<>();
+        Comparator<Integer> comparator = (data1, data2) -> {
+            if (data1 == null && data2 == null) {
+                return 0;
+            }
 
-        System.out.println(tree.add(123));
-        System.out.println(tree.add(12));
-        System.out.println(tree.add(248));
-        System.out.println(tree.add(98));
-        System.out.println(tree.add(238));
-        System.out.println(tree.add(255));
-        System.out.println(tree.add(null));
-        System.out.println(tree.add(null));
+            if (data1 == null) {
+                return -1;
+            }
+
+            if (data2 == null) {
+                return 1;
+            }
+
+            return Integer.compare(data1, data2);
+        };
+
+        BinaryTree<Integer> tree = new BinaryTree<>(comparator);
+
+        tree.add(123);
+        tree.add(12);
+        tree.add(248);
+        tree.add(98);
+        tree.add(238);
+        tree.add(255);
+        tree.add(null);
+        tree.add(null);
 
         tree.add(250);
         tree.add(259);
@@ -32,7 +49,7 @@ public class Main {
 
         Consumer<Integer> printer = System.out::println;
 
-        tree.traverseDepthRecursive(printer);
+        tree.traverseInDepthRecursive(printer);
 
         BinaryTree<Integer> tree1 = new BinaryTree<>();
 
@@ -48,11 +65,11 @@ public class Main {
         System.out.println(tree1.remove(12));
         System.out.println("Размер дерева: " + tree1.getCount());
 
-        tree1.traverseWidth(printer);
-        tree1.traverseDepth(printer);
+        tree1.traverseInWidth(printer);
+        tree1.traverseInDepth(printer);
 
         BinaryTree<Integer> tree2 = new BinaryTree<>();
 
-        tree2.traverseWidth(printer);
+        tree2.traverseInWidth(printer);
     }
 }
